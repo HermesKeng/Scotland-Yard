@@ -1,0 +1,9 @@
+C:\Users\user\Desktop\台北大學\Game Client\Game Client\bin\Debug\Game Client.exe.config
+C:\Users\user\Desktop\台北大學\Game Client\Game Client\bin\Debug\Game Client.exe
+C:\Users\user\Desktop\台北大學\Game Client\Game Client\bin\Debug\Game Client.pdb
+C:\Users\user\Desktop\台北大學\Game Client\Game Client\obj\Debug\Game Client.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\台北大學\Game Client\Game Client\obj\Debug\Game_Client.Form1.resources
+C:\Users\user\Desktop\台北大學\Game Client\Game Client\obj\Debug\Game_Client.Properties.Resources.resources
+C:\Users\user\Desktop\台北大學\Game Client\Game Client\obj\Debug\Game Client.csproj.GenerateResource.Cache
+C:\Users\user\Desktop\台北大學\Game Client\Game Client\obj\Debug\Game Client.exe
+C:\Users\user\Desktop\台北大學\Game Client\Game Client\obj\Debug\Game Client.pdb

@@ -1,0 +1,9 @@
+C:\Users\user\Desktop\台北大學\Game Server\Game Server\bin\Debug\Game Server.exe.config
+C:\Users\user\Desktop\台北大學\Game Server\Game Server\bin\Debug\Game Server.exe
+C:\Users\user\Desktop\台北大學\Game Server\Game Server\bin\Debug\Game Server.pdb
+C:\Users\user\Desktop\台北大學\Game Server\Game Server\obj\Debug\Game Server.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\台北大學\Game Server\Game Server\obj\Debug\Game_Server.Form1.resources
+C:\Users\user\Desktop\台北大學\Game Server\Game Server\obj\Debug\Game_Server.Properties.Resources.resources
+C:\Users\user\Desktop\台北大學\Game Server\Game Server\obj\Debug\Game Server.csproj.GenerateResource.Cache
+C:\Users\user\Desktop\台北大學\Game Server\Game Server\obj\Debug\Game Server.exe
+C:\Users\user\Desktop\台北大學\Game Server\Game Server\obj\Debug\Game Server.pdb
