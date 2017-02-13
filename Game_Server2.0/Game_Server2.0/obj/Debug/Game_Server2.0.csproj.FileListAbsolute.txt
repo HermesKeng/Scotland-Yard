@@ -1,0 +1,9 @@
+C:\Users\user\Desktop\台北大學\Game_Server2.0\Game_Server2.0\bin\Debug\Game_Server2.0.exe.config
+C:\Users\user\Desktop\台北大學\Game_Server2.0\Game_Server2.0\bin\Debug\Game_Server2.0.exe
+C:\Users\user\Desktop\台北大學\Game_Server2.0\Game_Server2.0\bin\Debug\Game_Server2.0.pdb
+C:\Users\user\Desktop\台北大學\Game_Server2.0\Game_Server2.0\obj\Debug\Game_Server2.0.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\台北大學\Game_Server2.0\Game_Server2.0\obj\Debug\Game_Server2._0.Form1.resources
+C:\Users\user\Desktop\台北大學\Game_Server2.0\Game_Server2.0\obj\Debug\Game_Server2._0.Properties.Resources.resources
+C:\Users\user\Desktop\台北大學\Game_Server2.0\Game_Server2.0\obj\Debug\Game_Server2.0.csproj.GenerateResource.Cache
+C:\Users\user\Desktop\台北大學\Game_Server2.0\Game_Server2.0\obj\Debug\Game_Server2.0.exe
+C:\Users\user\Desktop\台北大學\Game_Server2.0\Game_Server2.0\obj\Debug\Game_Server2.0.pdb
