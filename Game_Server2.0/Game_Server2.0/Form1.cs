@@ -46,6 +46,15 @@ namespace Game_Server2._0
             myByte = Encoding.Unicode.GetBytes(msg);
             ns_List[i].Write(myByte, 0, myByte.Length);
         }
+        private void Broadcast_Data(string msg)
+        {
+            myByte = Encoding.Unicode.GetBytes(msg);
+            for (int i = 0; i < Player; i++)
+            {
+                ns_List[i].Write(myByte, 0, myByte.Length);
+                Thread.Sleep(100);
+            }
+        }
         private String Read_Data(int i)
         {
             string msg = null;
@@ -65,7 +74,22 @@ namespace Game_Server2._0
             TcpClient client;
             NetworkStream ns;
             String msg=null;
-        
+            int[] initial_Point = { 13,16,26,29,34,50,
+                                    53,94,103,112,117,132,
+                                    138,141,155,174,197,198 };
+            List<int> start_Point = new List<int>();
+            int count = 0;
+            while (count < Player)
+            {
+                Random ranNum = new Random();
+                int temp = ranNum.Next(18);
+                Thread.Sleep(100);
+                if (!start_Point.Contains(temp))
+                {
+                    start_Point.Add(initial_Point[temp]);
+                    count++;
+                }
+            }
             while (true)
             {
                 if (counter <Player)
@@ -83,39 +107,41 @@ namespace Game_Server2._0
                 }
                 else
                 {
-                    for (int i = 0; i < Player; i++)
-                    {
-                        Send_Data(i, "所有玩家已經加入，遊戲開始\n");
-                    }
+                    Broadcast_Data("所有玩家已經加入，遊戲開始\n");
                     break;
                 }
             }
 
             int turn = 1;
+            bool is_First = true;
+            
             while(true){
                 /*遊戲內容-Coding*/
-                if (turn<=1)
+                if (turn<=24)
                 {
-                    msg = "1000 ------第" + turn + "回合開始-------\n ";
-                    for (int i = 0; i < Player; i++)
+                    msg = "1000 "+ turn +" ";
+                    Broadcast_Data(msg);
+                    if (is_First)
                     {
-                        Send_Data(i, msg);
+                        msg = "";
+                        for (int j = 0; j < start_Point.Count; j++)
+                        {
+                            msg = msg + start_Point[j] + " ";
+                        }
+                        Broadcast_Data(msg);
                         Thread.Sleep(100);
+                        is_First = false;
                     }
                     for (int i = 0; i < Player; i++)
                     {
                         msg = Read_Data(i);
-                        for (int j = 0; j < Player; j++)
-                        {
-                            Send_Data(j, msg);
-                            Thread.Sleep(100);
-                        }
+                        Broadcast_Data(msg);
                         UpdateUI(msg, infobox);
                     }
                     turn++;
                 }
                 else {
-                    msg = "1001 遊戲結束\n ";
+                    msg = "1001 0 ";
                     for (int i = 0; i < Player; i++)
                     {
                         Send_Data(i, msg);
