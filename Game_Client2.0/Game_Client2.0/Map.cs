@@ -28,8 +28,16 @@ namespace Game_Client2._0
                              "171 173 175 199 ","172 128 159 185 ","173 161 173 175 ","174 161 173 175 ","175 162 171 174 ","176 177 189 ","177 144 163 176 ","178 164 189 191 ","179 164 165 191 ","180 165 181 193 ",
                              "181 166 180 182 193 ","182 181 183 195 ","183 166 167 182 196 ","184 168 169 185 196 ","185 170 184 186 ","186 159 185 198 ","187 172 188 198 ","188 128 173 187 199 ","189 176 178 190 ","190 189 191 192 ",
                              "191 178 179 190 192 ","192 190 191 194 ","193 180 181 194 ","194 192 193 195 ","195 182 194 197 ","196 183 184 197 ","197 195 196 184 ","198 186 187 199 ","199 171 188 196"};
-        private List<List<int>> map = new List<List<int>>();
-        private List<int> PlayerPos = new List<int>();
+        private String[] bus_res = {"1 46 58 ","3 22 23 ","7 42 "," "};
+        private String[] train_res = { };
+        private String[] canel_res = { };
+        private List<List<int>> taxi_map = new List<List<int>>();
+        private List<List<int>> bus_map = new List<List<int>>();
+        private List<List<int>> train_map = new List<List<int>>();
+        private List<List<int>> canel_map = new List<List<int>>();
+        private int [,] PlayerPos=new int[5,25] ;
+        private int [,] PlayerTransport = new int[5,5];
+        //0:Taxi 1:Bus 2:Train 3:ALL 4:Double
         public Map()
         {
             String line,temp_point;
@@ -49,35 +57,82 @@ namespace Game_Client2._0
                     }
                 }
                 while(position>0);
-                map.Add(Temp);
+                taxi_map.Add(Temp);
             }
-        }
-       
-        public bool is_ConnectingVertex(int start,int end)
-        {
-            List<int> Temp = map[start - 1];
-            for (int i = 0; i < Temp.Count; i++)
+            for (int i = 0; i < 5; i++)
             {
-                if (Temp[i] == end)
+                for (int j = 0; j < 25; j++)
                 {
-                    return true;
-
+                    PlayerPos[i,j] = 0;
                 }
             }
-                return false; 
-        }
-        public int get_position(int ID)
+           
+            for (int i = 0; i < 5; i++)
+            {
+                if (i == 0)
+                {
+                    PlayerTransport[i, 0] = 4;
+                    PlayerTransport[i, 1] = 3;
+                    PlayerTransport[i, 2] = 3;
+                    PlayerTransport[i, 3] = 2;
+                    PlayerTransport[i, 4] = 3;
+                }
+                else
+                {
+                    PlayerTransport[i, 0] = 10;
+                    PlayerTransport[i, 1] = 8;
+                    PlayerTransport[i, 2] = 4;
+                    PlayerTransport[i, 3] = 0;
+                    PlayerTransport[i, 4] = 0;
+                }
+            }
+        }   
+        public bool is_ConnectingVertex(int start,int end,int trans)
         {
-            return PlayerPos[ID-1];
+            List<int> Temp;
+            switch (trans)
+            {
+                case 0:
+                    Temp = taxi_map[start - 1];
+                    return Temp.Contains(end);
+                case 1:
+                    Temp = bus_map[start - 1];
+                    return Temp.Contains(end);
+                case 2:
+                    Temp = train_map[start - 1];
+                    return Temp.Contains(end);
+                    
+                case 3:
+                    Temp = canel_map[start - 1];
+                    return Temp.Contains(end);
+            }
+            return false;
         }
-
-        public void CreatePos(int num)
+            
+         
+        public int GetPos(int ID,int now)
         {
-            PlayerPos.Add(num);
+            return PlayerPos[ID-1,now];
         }
-        public void SetPos(int Player,int num)
+        public int GetTicket(int Player, int trans)
         {
-            PlayerPos[Player-1]=num;
+            return PlayerTransport[Player - 1, trans];
+        }
+        public void CreatePos(int ID,int num)
+        {
+            PlayerPos[ID-1,0]=num;
+        }
+        public void SetPos(int Player,int num,int turn)
+        {
+            PlayerPos[Player-1,turn]=num;
+        }
+        public void AddTicket(int trans)
+        {
+            PlayerTransport[0, trans]++;
+        }
+        public void DeductTicket(int Player, int trans)
+        {
+            PlayerTransport[Player - 1, trans]--;
         }
     }
 }

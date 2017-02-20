@@ -69,16 +69,14 @@ namespace Game_Server2._0
             InitializeComponent();
             
         }
-        private void listen()
+        private void Game_Manager()
         {
-            TcpClient client;
-            NetworkStream ns;
-            String msg=null;
             int[] initial_Point = { 13,16,26,29,34,50,
                                     53,94,103,112,117,132,
                                     138,141,155,174,197,198 };
             List<int> start_Point = new List<int>();
-            int count = 0;
+            String msg = null;
+            int count = 0,turn=1;
             while (count < Player)
             {
                 Random ranNum = new Random();
@@ -90,6 +88,46 @@ namespace Game_Server2._0
                     count++;
                 }
             }
+            for (int j = 0; j < start_Point.Count; j++)
+            {
+                msg = msg + start_Point[j] + " ";
+            }
+            Broadcast_Data(msg);
+            
+            //執行回合，輪流移動
+            while (true)
+            {
+                if (turn > 24)
+                {
+                    //結束遊戲
+                    msg = "0";
+                    Broadcast_Data(msg);
+                    break;
+                }
+                else
+                {
+                    //繼續移動
+                    msg = "1";
+                    Broadcast_Data(msg);
+                    //依序聆聽每位玩家移動--傳送表格 Player Transportation Postition
+                    for (int i = 0; i < Player; i++)
+                    {
+                        msg = Read_Data(i);
+                        Broadcast_Data(msg);
+                        UpdateUI(msg, infobox);
+                    }
+                    turn++;
+                }
+                
+            }
+            //結束遊戲時聆聽所有人按重新開始
+        }
+        private void listen()
+        {
+            TcpClient client;
+            NetworkStream ns;
+            String msg=null;
+           
             while (true)
             {
                 if (counter <Player)
@@ -111,12 +149,13 @@ namespace Game_Server2._0
                     break;
                 }
             }
-
-            int turn = 1;
-            bool is_First = true;
-            
-            while(true){
-                /*遊戲內容-Coding*/
+            //-----遊戲開始-----//
+            Game_Manager();
+           
+         
+            /*遊戲內容-Coding*/
+            /*while(true){
+                
                 if (turn<=24)
                 {
                     msg = "1000 "+ turn +" ";
@@ -124,11 +163,7 @@ namespace Game_Server2._0
                     if (is_First)
                     {
                         msg = "";
-                        for (int j = 0; j < start_Point.Count; j++)
-                        {
-                            msg = msg + start_Point[j] + " ";
-                        }
-                        Broadcast_Data(msg);
+                       
                         Thread.Sleep(100);
                         is_First = false;
                     }
@@ -148,8 +183,9 @@ namespace Game_Server2._0
                         Thread.Sleep(100);
                     }
                 }
-                /*遊戲內容-Coding*/
-            }
+               
+            }*/
+           
         }
 
         private void start_Click(object sender, EventArgs e)
