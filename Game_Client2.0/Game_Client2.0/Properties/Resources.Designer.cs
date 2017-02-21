@@ -63,9 +63,9 @@ namespace Game_Client2._0.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Bitmap sample_map1 {
+        internal static System.Drawing.Bitmap 地圖 {
             get {
-                object obj = ResourceManager.GetObject("sample_map1", resourceCulture);
+                object obj = ResourceManager.GetObject("地圖", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
