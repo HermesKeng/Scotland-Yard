@@ -89,7 +89,7 @@ namespace Game_Server2._0
                                     138,141,155,174,197,198 };
             List<int> start_Point = new List<int>();
             String msg = null;
-            int count = 0,turn=24;
+            int count = 0,turn=1;
             while (count < Player)
             {
                 Random ranNum = new Random();
