@@ -20,6 +20,7 @@ namespace Game_Server2._0
         private List<NetworkStream> ns_List = new List<NetworkStream>();
         private Byte[] myByte;
         private delegate void callbUI(String message, Control ctl);
+        private delegate void Visable(Control unit, bool is_Open);
         private void UpdateUI(string value, Control ctl)
         {
             if (this.InvokeRequired)
@@ -30,6 +31,18 @@ namespace Game_Server2._0
             else
             {
                 ctl.Text += value;
+            }
+        }
+        private void VisableUI(Control unit, bool is_Open)
+        {
+            if (this.InvokeRequired)
+            {
+                Visable cb = new Visable(VisableUI);
+                this.Invoke(cb, unit, is_Open);
+            }
+            else
+            {
+                unit.Visible = is_Open;
             }
         }
         private int Player=3,counter=0;
@@ -76,7 +89,7 @@ namespace Game_Server2._0
                                     138,141,155,174,197,198 };
             List<int> start_Point = new List<int>();
             String msg = null;
-            int count = 0,turn=1;
+            int count = 0,turn=24;
             while (count < Player)
             {
                 Random ranNum = new Random();
@@ -97,11 +110,14 @@ namespace Game_Server2._0
             //執行回合，輪流移動
             while (true)
             {
-                if (turn > 24)
+                if (turn >= 24)
                 {
                     //結束遊戲
                     msg = "0";
                     Broadcast_Data(msg);
+                    Thread.Sleep(100);
+                    Disconnect();
+                    VisableUI(restart,true);
                     break;
                 }
                 else
@@ -115,6 +131,16 @@ namespace Game_Server2._0
                         msg = Read_Data(i);
                         Broadcast_Data(msg);
                         UpdateUI(msg, infobox);
+                        if (msg[2] == '4')
+                        {
+                            for (int j = 0; j < 2; j++)
+                            {
+                                msg = Read_Data(i);
+                                Broadcast_Data(msg);
+                                UpdateUI(msg, infobox);
+                            }
+                        }
+                        
                     }
                     turn++;
                 }
@@ -127,7 +153,9 @@ namespace Game_Server2._0
             TcpClient client;
             NetworkStream ns;
             String msg=null;
-           
+            counter = 0;
+            msg = "等待玩家加入\n";
+            UpdateUI(msg, infobox);
             while (true)
             {
                 if (counter <Player)
@@ -151,43 +179,16 @@ namespace Game_Server2._0
             }
             //-----遊戲開始-----//
             Game_Manager();
-           
-         
-            /*遊戲內容-Coding*/
-            /*while(true){
-                
-                if (turn<=24)
-                {
-                    msg = "1000 "+ turn +" ";
-                    Broadcast_Data(msg);
-                    if (is_First)
-                    {
-                        msg = "";
-                       
-                        Thread.Sleep(100);
-                        is_First = false;
-                    }
-                    for (int i = 0; i < Player; i++)
-                    {
-                        msg = Read_Data(i);
-                        Broadcast_Data(msg);
-                        UpdateUI(msg, infobox);
-                    }
-                    turn++;
-                }
-                else {
-                    msg = "1001 0 ";
-                    for (int i = 0; i < Player; i++)
-                    {
-                        Send_Data(i, msg);
-                        Thread.Sleep(100);
-                    }
-                }
-               
-            }*/
-           
         }
-
+        private void Disconnect()
+        {
+            for (int i = 0; i < ns_List.Count; i++)
+            {
+                ns_List[i].Close();
+            }
+                ns_List.Clear();
+                UpdateUI("結束連線", infobox);
+        }
         private void start_Click(object sender, EventArgs e)
         {
             Set_Connect();
@@ -196,6 +197,16 @@ namespace Game_Server2._0
             listener.IsBackground = true;
             listener.Start();
             while (!listener.IsAlive) { }
+            start.Visible = false;
+        }
+
+        private void restart_Click(object sender, EventArgs e)
+        {
+            Thread listener = new Thread(listen);
+            listener.IsBackground = true;
+            listener.Start();
+            while (!listener.IsAlive) { }
+            restart.Visible = false;
         }
         
     }

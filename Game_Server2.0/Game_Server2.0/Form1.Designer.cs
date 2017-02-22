@@ -30,6 +30,7 @@
         {
             this.infobox = new System.Windows.Forms.RichTextBox();
             this.start = new System.Windows.Forms.Button();
+            this.restart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // infobox
@@ -51,11 +52,23 @@
             this.start.UseVisualStyleBackColor = true;
             this.start.Click += new System.EventHandler(this.start_Click);
             // 
+            // restart
+            // 
+            this.restart.Location = new System.Drawing.Point(714, 83);
+            this.restart.Name = "restart";
+            this.restart.Size = new System.Drawing.Size(75, 23);
+            this.restart.TabIndex = 2;
+            this.restart.Text = "restart";
+            this.restart.UseVisualStyleBackColor = true;
+            this.restart.Visible = false;
+            this.restart.Click += new System.EventHandler(this.restart_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 634);
+            this.Controls.Add(this.restart);
             this.Controls.Add(this.start);
             this.Controls.Add(this.infobox);
             this.Name = "Form1";
@@ -68,6 +81,7 @@
 
         public System.Windows.Forms.RichTextBox infobox;
         private System.Windows.Forms.Button start;
+        private System.Windows.Forms.Button restart;
 
     }
 }

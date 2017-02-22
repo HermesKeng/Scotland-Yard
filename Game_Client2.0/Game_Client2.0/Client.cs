@@ -50,5 +50,10 @@ namespace Game_Client2._0
             myNetworkStream.Flush();
             
         }
+        public void DisConnect()
+        {
+            myNetworkStream.Close();
+            myTcpClient.Close();
+        }
     }
 }
