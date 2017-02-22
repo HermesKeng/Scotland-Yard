@@ -14,7 +14,7 @@ namespace Game_Client2._0
     {
         private int player_ID;
         private int player_Sum=3;
-        int turn = 23;
+        int turn = 1;
         private Client client = new Client();
         private Thread data_listener;
         private Map map ;
