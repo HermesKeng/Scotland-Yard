@@ -44,27 +44,27 @@ namespace Game_Client2._0
         private List<List<int>> canel_map = new List<List<int>>();
         private int [,] PlayerPos=new int[5,25] ;
         private int [,] PlayerTransport = new int[5,5];
-        
         //0:Taxi 1:Bus 2:Train 3:ALL 4:Double
-        public Map()
-        {
-            String line,temp_point;
-            
+        private void CreatLink() {
+            String line, temp_point;
+
             for (int i = 0; i < taxi_res.Length; i++)
             {
-              
-                List<int>Temp=new List<int>();
+
+                List<int> Temp = new List<int>();
                 int position = 0, start = 0;
                 line = taxi_res[i];
-                do{
-                    position=line.IndexOf(" ",start);
-                    if(position>=0){
-                        temp_point=line.Substring(start,position-start+1).Trim();
+                do
+                {
+                    position = line.IndexOf(" ", start);
+                    if (position >= 0)
+                    {
+                        temp_point = line.Substring(start, position - start + 1).Trim();
                         Temp.Add(Int32.Parse(temp_point));
                         start = position + 1;
                     }
                 }
-                while(position>0);
+                while (position > 0);
                 taxi_map.Add(Temp);
             }
             for (int i = 0; i < bus_res.Length; i++)
@@ -72,14 +72,16 @@ namespace Game_Client2._0
                 List<int> Temp = new List<int>();
                 int position = 0, start = 0;
                 line = bus_res[i];
-                do{
-                    position=line.IndexOf(" ",start);
-                    if(position>=0){
-                        temp_point=line.Substring(start,position-start+1).Trim();
+                do
+                {
+                    position = line.IndexOf(" ", start);
+                    if (position >= 0)
+                    {
+                        temp_point = line.Substring(start, position - start + 1).Trim();
                         Temp.Add(Int32.Parse(temp_point));
-                        start=position+1;
+                        start = position + 1;
                     }
-                }while (position>0);
+                } while (position > 0);
                 bus_map.Add(Temp);
             }
             for (int i = 0; i < train_res.Length; i++)
@@ -116,14 +118,16 @@ namespace Game_Client2._0
                 } while (position > 0);
                 canel_map.Add(Temp);
             }
-                for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 25; j++)
                 {
-                    for (int j = 0; j < 25; j++)
-                    {
-                        PlayerPos[i, j] = 0;
-                    }
+                    PlayerPos[i, j] = 0;
                 }
-           
+            }
+        }
+        private void SetTicket()
+        {
             for (int i = 0; i < 5; i++)
             {
                 if (i == 0)
@@ -143,8 +147,12 @@ namespace Game_Client2._0
                     PlayerTransport[i, 4] = 0;
                 }
             }
-        }   
-        
+        }
+        public Map()
+        {
+            CreatLink();
+            SetTicket();
+        }      
         public bool is_ConnectingVertex(int start,int end,int trans)
         {
             List<int> Temp;
@@ -205,8 +213,6 @@ namespace Game_Client2._0
             }
             return false;
         }
-            
-         
         public int GetPos(int ID,int now)
         {
             return PlayerPos[ID-1,now];
@@ -237,6 +243,812 @@ namespace Game_Client2._0
                 return true;
             }
             return false;
+        }
+        public int[] GetCoordinate(int point)
+        {
+            
+            int[] coordinate={0,0};
+            switch (point){
+                case 1:
+                    coordinate[0] = 150;
+                    coordinate[1] = 26;
+                    break;
+                case 2:
+                    coordinate[0] = 413;
+                    coordinate[1] = 5;
+                    break;
+                case 3:
+                    coordinate[0] = 584;
+                    coordinate[1] = 11;
+                    break;
+                case 4:
+                    coordinate[0] = 729;
+                    coordinate[1] = 6;
+                    break;
+                case 5:
+                    coordinate[0] = 1144;
+                    coordinate[1] = 16;
+                    break;
+                case 6:
+                    coordinate[0] = 1274;
+                    coordinate[1] = 33;
+                    break;
+                case 7:
+                    coordinate[0] = 1399;
+                    coordinate[1] = 19;
+                    break;
+                case 8:
+                    coordinate[0] = 88;
+                    coordinate[1] = 90;
+                    break;
+                case 9:
+                    coordinate[0] = 192;
+                    coordinate[1] = 102;
+                    break;
+                case 10:
+                    coordinate[0] = 502;
+                    coordinate[1] = 86;
+                    break;
+                case 11:
+                    coordinate[0] = 615;
+                    coordinate[1] = 104;
+                    break;
+                case 12:
+                    coordinate[0] = 680;
+                    coordinate[1] = 93;
+                    break;
+                case 13:
+                    coordinate[0] = 760;
+                    coordinate[1] =79;
+                    break;
+                case 14:
+                    coordinate[0] = 888;
+                    coordinate[1] = 49;
+                    break;
+                case 15:
+                    coordinate[0] = 1019;
+                    coordinate[1] = 34;
+                    break;
+                case 16:
+                    coordinate[0] =1166;
+                    coordinate[1] = 81;
+                    break;
+                case 17:
+                    coordinate[0] = 1352;
+                    coordinate[1] = 114;
+                    break;
+                case 18:
+                    coordinate[0] = 32;
+                    coordinate[1] = 144;
+                    break;
+                case 19:
+                    coordinate[0] = 171;
+                    coordinate[1] = 162;
+                    break;
+                case 20:
+                    coordinate[0] = 291;
+                    coordinate[1] = 129;
+                    break;
+                case 21:
+                    coordinate[0] = 388;
+                    coordinate[1] = 170;
+                    break;
+                case 22:
+                    coordinate[0] = 232;
+                    coordinate[1] = 211;
+                    break;
+                case 23:
+                    coordinate[0] = 677;
+                    coordinate[1] = 139;
+                    break;
+                case 24:
+                    coordinate[0] = 834;
+                    coordinate[1] = 143;
+                    break;
+                case 25:
+                    coordinate[0] = 938;
+                    coordinate[1] = 159;
+                    break;
+                case 26:
+                    coordinate[0] = 999;
+                    coordinate[1] = 89;
+                    break;
+                case 27:
+                    coordinate[0] = 1058;
+                    coordinate[1] = 169;
+                    break;
+                case 28:
+                    coordinate[0] = 1103;
+                    coordinate[1] = 139;
+                    break;
+                case 29:
+                    coordinate[0] = 1230;
+                    coordinate[1] = 156;
+                    break;
+                case 30:
+                    coordinate[0] = 1437;
+                    coordinate[1] = 148;
+                    break;
+                case 31:
+                    coordinate[0] = 70;
+                    coordinate[1] = 196;
+                    break;
+                case 32:
+                    coordinate[0] = 1230;
+                    coordinate[1] = 156;
+                    break;
+                case 33:
+                    coordinate[0] = 367;
+                    coordinate[1] = 202;
+                    break;
+                case 34:
+                    coordinate[0] =512;
+                    coordinate[1] = 221;
+                    break;
+                case 35:
+                    coordinate[0] = 612;
+                    coordinate[1] =256;
+                    break;
+                case 36:
+                    coordinate[0] = 669;
+                    coordinate[1] = 247;
+                    break;
+                case 37:
+                    coordinate[0] = 722;
+                    coordinate[1] = 203;
+                    break;
+                case 38:
+                    coordinate[0] = 866;
+                    coordinate[1] = 203;
+                    break;
+                case 39:
+                    coordinate[0] = 974;
+                    coordinate[1] = 198;
+                    break;
+                case 40:
+                    coordinate[0] = 1050;
+                    coordinate[1] = 233;
+                    break;
+                case 41:
+                    coordinate[0] = 1121;
+                    coordinate[1] = 203;
+                    break;
+                case 42:
+                    coordinate[0] = 1357;
+                    coordinate[1] = 226;
+                    break;
+                case 43:
+                    coordinate[0] = 45;
+                    coordinate[1] = 253;
+                    break;
+                case 44:
+                    coordinate[0] = 190;
+                    coordinate[1] = 281;
+                    break;
+                case 45:
+                    coordinate[0] = 256;
+                    coordinate[1] = 288;
+                    break;
+                case 46:
+                    coordinate[0] = 339;
+                    coordinate[1] = 262;
+                    break;
+                case 47:
+                    coordinate[0] = 452;
+                    coordinate[1] = 267;
+                    break;
+                case 48:
+                    coordinate[0] = 566;
+                    coordinate[1] = 317;
+                    break;
+                case 49:
+                    coordinate[0] = 738;
+                    coordinate[1] = 310;
+                    break;
+                case 50:
+                    coordinate[0] = 805;
+                    coordinate[1] = 263;
+                    break;
+                case 51:
+                    coordinate[0] = 946;
+                    coordinate[1] = 287;
+                    break;
+                case 52:
+                    coordinate[0] = 1019;
+                    coordinate[1] = 267;
+                    break;
+                case 53:
+                    coordinate[0] = 1061;
+                    coordinate[1] = 289;
+                    break;
+                case 54:
+                    coordinate[0] = 1149;
+                    coordinate[1] = 266;
+                    break;
+                case 55:
+                    coordinate[0] = 1240;
+                    coordinate[1] = 262;
+                    break;
+                case 56:
+                    coordinate[0] = 1405;
+                    coordinate[1] = 280;
+                    break;
+                case 57:
+                    coordinate[0] = 88;
+                    coordinate[1] = 294;
+                    break;
+                case 58:
+                    coordinate[0] = 189;
+                    coordinate[1] = 335;
+                    break;
+                case 59:
+                    coordinate[0] = 236;
+                    coordinate[1] = 382;
+                    break;
+                case 60:
+                    coordinate[0] = 306;
+                    coordinate[1] = 330;
+                    break;
+                case 61:
+                    coordinate[0] = 376;
+                    coordinate[1] = 390;
+                    break;
+                case 62:
+                    coordinate[0] = 458;
+                    coordinate[1] = 356;
+                    break;
+                case 63:
+                    coordinate[0] = 577;
+                    coordinate[1] = 389;
+                    break;
+                case 64:
+                    coordinate[0] = 647;
+                    coordinate[1] = 375;
+                    break;
+                case 65:
+                    coordinate[0] = 688;
+                    coordinate[1] = 366;
+                    break;
+                case 66:
+                    coordinate[0] = 770;
+                    coordinate[1] = 384;
+                    break;
+                case 67:
+                    coordinate[0] = 852;
+                    coordinate[1] = 333;
+                    break;
+                case 68:
+                    coordinate[0] = 955;
+                    coordinate[1] = 314;
+                    break;
+                case 69:
+                    coordinate[0] = 1005;
+                    coordinate[1] = 316;
+                    break;
+                case 70:
+                    coordinate[0] = 1115;
+                    coordinate[1] = 335;
+                    break;
+                case 71:
+                    coordinate[0] = 1230;
+                    coordinate[1] = 322;
+                    break;
+                case 72:
+                    coordinate[0] = 1365;
+                    coordinate[1] = 348;
+                    break;
+                case 73:
+                    coordinate[0] = 51;
+                    coordinate[1] = 367;
+                    break;
+                case 74:
+                    coordinate[0] = 100;
+                    coordinate[1] = 420;
+                    break;
+                case 75:
+                    coordinate[0] = 1061;
+                    coordinate[1] = 289;
+                    break;
+                case 76:
+                    coordinate[0] = 206;
+                    coordinate[1] = 418;
+                    break;
+                case 77:
+                    coordinate[0] = 339;
+                    coordinate[1] = 436;
+                    break;
+                case 78:
+                    coordinate[0] = 390;
+                    coordinate[1] = 427;
+                    break;
+                case 79:
+                    coordinate[0] = 474;
+                    coordinate[1] = 409;
+                    break;
+                case 80:
+                    coordinate[0] = 594;
+                    coordinate[1] = 437;
+                    break;
+                case 81:
+                    coordinate[0] = 661;
+                    coordinate[1] = 464;
+                    break;
+                case 82:
+                    coordinate[0] = 747;
+                    coordinate[1] = 443;
+                    break;
+                case 83:
+                    coordinate[0] = 804;
+                    coordinate[1] = 417;
+                    break;
+                case 84:
+                    coordinate[0] = 893;
+                    coordinate[1] = 377;
+                    break;
+                case 85:
+                    coordinate[0] = 959;
+                    coordinate[1] = 370;
+                    break;
+                case 86:
+                    coordinate[0] = 1023;
+                    coordinate[1] = 392;
+                    break;
+                case 87:
+                    coordinate[0] = 1164;
+                    coordinate[1] = 427;
+                    break;
+                case 88:
+                    coordinate[0] = 1185;
+                    coordinate[1] = 465;
+                    break;
+                case 89:
+                    coordinate[0] = 1256;
+                    coordinate[1] = 409;
+                    break;
+                case 90:
+                    coordinate[0] = 1291;
+                    coordinate[1] = 399;
+                    break;
+                case 91:
+                    coordinate[0] = 1428;
+                    coordinate[1] = 422;
+                    break;
+                case 92:
+                    coordinate[0] = 18;
+                    coordinate[1] = 474;
+                    break;
+                case 93:
+                    coordinate[0] = 65;
+                    coordinate[1] = 530;
+                    break;
+                case 94:
+                    coordinate[0] = 113;
+                    coordinate[1] = 483;
+                    break;
+                case 95:
+                    coordinate[0] = 190;
+                    coordinate[1] = 472;
+                    break;
+                case 96:
+                    coordinate[0] = 398;
+                    coordinate[1] = 495;
+                    break;
+                case 97:
+                    coordinate[0] = 437;
+                    coordinate[1] = 486;
+                    break;
+                case 98:
+                    coordinate[0] = 504;
+                    coordinate[1] = 465;
+                    break;
+                case 99:
+                    coordinate[0] = 571;
+                    coordinate[1] = 504;
+                    break;
+                case 100:
+                    coordinate[0] = 642;
+                    coordinate[1] = 503;
+                    break;
+                case 101:
+                    coordinate[0] = 767;
+                    coordinate[1] = 500;
+                    break;
+                case 102:
+                    coordinate[0] = 891;
+                    coordinate[1] = 454;
+                    break;
+                case 103:
+                    coordinate[0] = 973;
+                    coordinate[1] = 440;
+                    break;
+                case 104:
+                    coordinate[0] = 1023;
+                    coordinate[1] = 459;
+                    break;
+                case 105:
+                    coordinate[0] = 1291;
+                    coordinate[1] = 501;
+                    break;
+                case 106:
+                    coordinate[0] = 1364;
+                    coordinate[1] = 477;
+                    break;
+                case 107:
+                    coordinate[0] = 1416;
+                    coordinate[1] = 481;
+                    break;
+                case 108:
+                    coordinate[0] = 1266;
+                    coordinate[1] = 604;
+                    break;
+                case 109:
+                    coordinate[0] = 467;
+                    coordinate[1] = 613;
+                    break;
+                case 110:
+                    coordinate[0] = 507;
+                    coordinate[1] = 530;
+                    break;
+                case 111:
+                    coordinate[0] = 547;
+                    coordinate[1] = 578;
+                    break;
+                case 112:
+                    coordinate[0] = 614;
+                    coordinate[1] = 567;
+                    break;
+                case 113:
+                    coordinate[0] = 673;
+                    coordinate[1] = 562;
+                    break;
+                case 114:
+                    coordinate[0] = 783;
+                    coordinate[1] = 542;
+                    break;
+                case 115:
+                    coordinate[0] = 853;
+                    coordinate[1] = 500;
+                    break;
+                case 116:
+                    coordinate[0] = 1026;
+                    coordinate[1] = 551;
+                    break;
+                case 117:
+                    coordinate[0] = 1150;
+                    coordinate[1] = 595;
+                    break;
+                case 118:
+                    coordinate[0] = 1067;
+                    coordinate[1] = 620;
+                    break;
+                case 119:
+                    coordinate[0] = 1391;
+                    coordinate[1] = 634;
+                    break;
+                case 120:
+                    coordinate[0] = 21;
+                    coordinate[1] = 692;
+                    break;
+                case 121:
+                    coordinate[0] = 79;
+                    coordinate[1] = 688;
+                    break;
+                case 122:
+                    coordinate[0] = 171;
+                    coordinate[1] = 719;
+                    break;
+                case 123:
+                    coordinate[0] = 335;
+                    coordinate[1] = 679;
+                    break;
+                case 124:
+                    coordinate[0] = 420;
+                    coordinate[1] = 663;
+                    break;
+                case 125:
+                    coordinate[0] = 646;
+                    coordinate[1] = 613;
+                    break;
+                case 126:
+                    coordinate[0] = 818;
+                    coordinate[1] = 603;
+                    break;
+                case 127:
+                    coordinate[0] = 947;
+                    coordinate[1] = 586;
+                    break;
+                case 128:
+                    coordinate[0] = 1131;
+                    coordinate[1] = 812;
+                    break;
+                case 129:
+                    coordinate[0] = 1174;
+                    coordinate[1] = 644;
+                    break;
+                case 130:
+                    coordinate[0] = 616;
+                    coordinate[1] = 690;
+                    break;
+                case 131:
+                    coordinate[0] = 670;
+                    coordinate[1] = 650;
+                    break;
+                case 132:
+                    coordinate[0] = 744;
+                    coordinate[1] = 640;
+                    break;
+                case 133:
+                    coordinate[0] = 878;
+                    coordinate[1] = 675;
+                    break;
+                case 134:
+                    coordinate[0] = 985;
+                    coordinate[1] = 644;
+                    break;
+                case 135:
+                    coordinate[0] = 1218;
+                    coordinate[1] = 706;
+                    break;
+                case 136:
+                    coordinate[0] = 1387;
+                    coordinate[1] = 759;
+                    break;
+                case 137:
+                    coordinate[0] = 257;
+                    coordinate[1] = 744;
+                    break;
+                case 138:
+                    coordinate[0] = 486;
+                    coordinate[1] = 709;
+                    break;
+                case 139:
+                    coordinate[0] = 585;
+                    coordinate[1] = 745;
+                    break;
+                case 140:
+                    coordinate[0] = 775;
+                    coordinate[1] = 725;
+                    break;
+                case 141:
+                    coordinate[0] = 920;
+                    coordinate[1] = 743;
+                    break;
+                case 142:
+                    coordinate[0] = 1063;
+                    coordinate[1] = 722;
+                    break;
+                case 143:
+                    coordinate[0] = 1174;
+                    coordinate[1] = 731;
+                    break;
+                case 144:
+                    coordinate[0] = 34;
+                    coordinate[1] = 829;
+                    break;
+                case 145:
+                    coordinate[0] = 117;
+                    coordinate[1] = 807;
+                    break;
+                case 146:
+                    coordinate[0] = 157;
+                    coordinate[1] = 807;
+                    break;
+                case 147:
+                    coordinate[0] = 213;
+                    coordinate[1] = 793;
+                    break;
+                case 148:
+                    coordinate[0] = 305;
+                    coordinate[1] = 819;
+                    break;
+                case 149:
+                    coordinate[0] = 375;
+                    coordinate[1] = 800;
+                    break;
+                case 150:
+                    coordinate[0] = 410;
+                    coordinate[1] = 749;
+                    break;
+                case 151:
+                    coordinate[0] = 461;
+                    coordinate[1] = 823;
+                    break;
+                case 152:
+                    coordinate[0] = 487;
+                    coordinate[1] = 758;
+                    break;
+                case 153:
+                    coordinate[0] = 553;
+                    coordinate[1] = 798;
+                    break;
+                case 154:
+                    coordinate[0] = 657;
+                    coordinate[1] = 756;
+                    break;
+                case 155:
+                    coordinate[0] = 713;
+                    coordinate[1] = 812;
+                    break;
+                case 156:
+                    coordinate[0] = 793;
+                    coordinate[1] = 850;
+                    break;
+                case 157:
+                    coordinate[0] = 868;
+                    coordinate[1] = 851;
+                    break;
+                case 158:
+                    coordinate[0] = 984;
+                    coordinate[1] = 802;
+                    break;
+                case 159:
+                    coordinate[0] = 954;
+                    coordinate[1] = 951;
+                    break;
+                case 160:
+                    coordinate[0] = 1220;
+                    coordinate[1] = 849;
+                    break;
+                case 161:
+                    coordinate[0] = 1322;
+                    coordinate[1] = 825;
+                    break;
+                case 162:
+                    coordinate[0] = 1415;
+                    coordinate[1] = 822;
+                    break;
+                case 163:
+                    coordinate[0] = 165;
+                    coordinate[1] = 880;
+                    break;
+                case 164:
+                    coordinate[0] = 236;
+                    coordinate[1] = 880;
+                    break;
+                case 165:
+                    coordinate[0] = 391;
+                    coordinate[1] = 886;
+                    break;
+                case 166:
+                    coordinate[0] = 531;
+                    coordinate[1] = 846;
+                    break;
+                case 167:
+                    coordinate[0] = 645;
+                    coordinate[1] = 866;
+                    break;
+                case 168:
+                    coordinate[0] = 685;
+                    coordinate[1] = 894;
+                    break;
+                case 169:
+                    coordinate[0] = 756;
+                    coordinate[1] = 883;
+                    break;
+                case 170:
+                    coordinate[0] = 853;
+                    coordinate[1] = 919;
+                    break;
+                case 171:
+                    coordinate[0] = 1287;
+                    coordinate[1] = 1070;
+                    break;
+                case 172:
+                    coordinate[0] = 1093;
+                    coordinate[1] = 909;
+                    break;
+                case 173:
+                    coordinate[0] = 1247;
+                    coordinate[1] = 948;
+                    break;
+                case 174:
+                    coordinate[0] = 1350;
+                    coordinate[1] = 919;
+                    break;
+                case 175:
+                    coordinate[0] = 1421;
+                    coordinate[1] = 975;
+                    break;
+                case 176:
+                    coordinate[0] = 49;
+                    coordinate[1] = 945;
+                    break;
+                case 177:
+                    coordinate[0] = 107;
+                    coordinate[1] = 928;
+                    break;
+                case 178:
+                    coordinate[0] = 215;
+                    coordinate[1] = 919;
+                    break;
+                case 179:
+                    coordinate[0] = 338;
+                    coordinate[1] = 935;
+                    break;
+                case 180:
+                    coordinate[0] = 418;
+                    coordinate[1] = 946;
+                    break;
+                case 181:
+                    coordinate[0] = 469;
+                    coordinate[1] = 985;
+                    break;
+                case 182:
+                    coordinate[0] = 534;
+                    coordinate[1] = 944;
+                    break;
+                case 183:
+                    coordinate[0] = 587;
+                    coordinate[1] = 914;
+                    break;
+                case 184:
+                    coordinate[0] = 758;
+                    coordinate[1] = 949;
+                    break;
+                case 185:
+                    coordinate[0] = 830;
+                    coordinate[1] = 1032;
+                    break;
+                case 186:
+                    coordinate[0] = 925;
+                    coordinate[1] = 1009;
+                    break;
+                case 187:
+                    coordinate[0] = 1049;
+                    coordinate[1] = 980;
+                    break;
+                case 188:
+                    coordinate[0] = 1162;
+                    coordinate[1] = 979;
+                    break;
+                case 189:
+                    coordinate[0] = 74;
+                    coordinate[1] = 1017;
+                    break;
+                case 190:
+                    coordinate[0] = 175;
+                    coordinate[1] = 1057;
+                    break;
+                case 191:
+                    coordinate[0] = 259;
+                    coordinate[1] = 998;
+                    break;
+                case 192:
+                    coordinate[0] = 276;
+                    coordinate[1] = 1090;
+                    break;
+                case 193:
+                    coordinate[0] = 473;
+                    coordinate[1] = 990;
+                    break;
+                case 194:
+                    coordinate[0] = 486;
+                    coordinate[1] = 1006;
+                    break;
+                case 195:
+                    coordinate[0] = 547;
+                    coordinate[1] = 1039;
+                    break;
+                case 196:
+                    coordinate[0] = 645;
+                    coordinate[1] = 986;
+                    break;
+                case 197:
+                    coordinate[0] = 655;
+                    coordinate[1] = 1016;
+                    break;
+                case 198:
+                    coordinate[0] = 989;
+                    coordinate[1] = 1085;
+                    break;
+                case 199:
+                    coordinate[0] = 1209;
+                    coordinate[1] = 1093;
+                    break;
+                
+                    
+            }
+            return coordinate;
         }
     }
 }

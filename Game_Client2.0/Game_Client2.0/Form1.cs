@@ -13,6 +13,7 @@ namespace Game_Client2._0
     public partial class Form1 : Form
     {
         private int player_ID;
+        private PictureBox[] figure=new PictureBox[5];
         private int player_Sum=3;
         int turn = 1;
         private Client client = new Client();
@@ -22,6 +23,20 @@ namespace Game_Client2._0
         private delegate void callUI(String msg, Control unit);
         private delegate void Disable(Control unit,bool is_Open);
         private delegate void Visable(Control unit,bool is_Open);
+        private delegate void setPos(Point new_pos, Control unit);
+        private delegate void sendBack(Control unit);
+        private void SendBackUI(Control unit)
+        {
+            if (this.InvokeRequired)
+            {
+                sendBack cb = new sendBack(SendBackUI);
+                this.Invoke(cb, unit);
+            }
+            else
+            {
+                unit.SendToBack();
+            }
+        }
         private void DisableUI(Control unit, bool is_Open)
         {
             if (this.InvokeRequired)
@@ -32,6 +47,18 @@ namespace Game_Client2._0
             else
             {
                 unit.Enabled = is_Open;
+            }
+        }
+        private void moveFig(Point new_pos, Control unit)
+        {
+            if (this.InvokeRequired)
+            {
+                setPos cb = new setPos(moveFig);
+                this.Invoke(cb,  new_pos,unit);
+            }
+            else
+            {
+                unit.Location = new_pos;
             }
         }
         private void VisableUI(Control unit,bool is_Open)
@@ -70,9 +97,44 @@ namespace Game_Client2._0
                 unit.Text = value;
             }
         }
+        private void ini_Figure()
+        {
+            int figure_sum = 5;
+            int[] coordinate=new int[2];
+            for (int i = 0; i < figure_sum; i++)
+            {
+                figure[i] = new PictureBox();
+                figure[i].Size = new Size(15, 15);
+                figure[i].Location = new Point(10, 10);
+                switch(i%5){
+                    case 0:
+                        figure[i].BackColor = Color.DarkOrchid;
+                        break;
+                    case 1:
+                        figure[i].BackColor = Color.Yellow;
+                        break;
+                    case 2:
+                        figure[i].BackColor = Color.Blue;
+                        break;
+                    case 3:
+                        figure[i].BackColor = Color.OrangeRed;
+                        break;
+                    case 4:
+                        figure[i].BackColor = Color.Brown;
+                        break;
+                }
+                figure[i].Visible = false;
+                figure[i].BorderStyle = BorderStyle.FixedSingle;
+                pictureBox1.Controls.Add(figure[i]);
+            }
+            pictureBox1.SendToBack();
+        }
         public Form1()
         {
             InitializeComponent();
+            ini_Figure();
+            
+            
         }
         void myButton_Click(Object sender, System.EventArgs e)
         {
@@ -110,10 +172,17 @@ namespace Game_Client2._0
             EditUI(msg, ticket);
             return ;
         }
+        private void SetFigure(int point,int Player)
+        {
+            int[] coordinate = map.GetCoordinate(point);
+            Point tempP = new Point(coordinate[0], coordinate[1]);
+            moveFig(tempP, figure[Player - 1]);
+            SendBackUI(pictureBox1);
+        }
         private void Game()
         {
             
-            turn = 24;
+            turn = 1;
             String msg;
             String[] moveData;
             map = new Map();
@@ -134,7 +203,21 @@ namespace Game_Client2._0
                     index++;
                 }
             } while (positon > 0);
+            
             AppendUI("你的初始位置 " + map.GetPos(player_ID, turn - 1) + "\n", infobox);
+            //設立棋子位置
+            int point = map.GetPos(player_ID, turn - 1);
+            if (player_ID == 1)
+            {
+                VisableUI(figure[player_ID - 1], true);
+                SetFigure(point, player_ID);
+            }
+            for (int i = 2; i <=player_Sum; i++)
+            {
+                point = map.GetPos(i, turn - 1);
+                VisableUI(figure[i - 1], true); 
+                SetFigure(point, i);
+            }
             //設立車票數
             if (player_ID == 1)
             {
@@ -179,10 +262,13 @@ namespace Game_Client2._0
                                     if ((turn == 3 || turn == 8 || turn == 13 || turn == 18))
                                     {
                                         AppendUI("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "移動至" + moveData[2] + "\n", infobox);
+                                        SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
+                                        VisableUI(figure[0], true);
                                     }
                                     else
                                     {
                                         AppendUI("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "\n", infobox);
+                                        VisableUI(figure[0], false);
                                     }
                                 if (j == 0)
                                 {
@@ -198,16 +284,23 @@ namespace Game_Client2._0
                         }
                         else
                         {
+                            if (Int32.Parse(moveData[0]) != 1)
+                            {
+                                SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
+                            }
                             map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);//設定遊戲記錄表位置
                             map.DeductTicket(Int32.Parse(moveData[0]), Int32.Parse(moveData[1]));//使用車票須扣除
                             if (Int32.Parse(moveData[0]) == 1)
                                 if ((turn == 3 || turn == 8 || turn == 13 || turn == 18))
                                 {
                                     AppendUI("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "移動至" + moveData[2] + "\n", infobox);
+                                    SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
+                                    VisableUI(figure[0], true);
                                 }
                                 else
                                 {
                                     AppendUI("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "\n", infobox);
+                                    VisableUI(figure[0], false);
                                 }
                             //移動後判斷是否在同一個位置
                             if (is_SamePos(map.GetPos(1, turn), Int32.Parse(moveData[2])) && Int32.Parse(moveData[0]) != 1)
@@ -224,7 +317,7 @@ namespace Game_Client2._0
                     //顯示移動時產生的元件
                     msg = client.Read_Data();
                     moveData = Decoding(msg);
-                    //判定是否抓到MR.X
+                    
                     if (moveData[1] == "4")
                     {
                         msg = client.Read_Data();
@@ -235,6 +328,8 @@ namespace Game_Client2._0
                     }
                     else
                     {
+                        //判定是否抓到MR.X
+                        
                         if (is_SamePos(map.GetPos(1, turn), Int32.Parse(moveData[2])) && Int32.Parse(moveData[0]) != 1)
                         {
                             MessageBox.Show("於 " + moveData[2] + " 找到MR.X，警察獲勝!");
@@ -251,6 +346,7 @@ namespace Game_Client2._0
                         msg = client.Read_Data();
                        // AppendUI(msg, infobox);
                         moveData = Decoding(msg);
+                        SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
                         map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);
                         map.DeductTicket(Int32.Parse(moveData[0]), Int32.Parse(moveData[1]));
                         if (player_ID == 1)
@@ -361,6 +457,7 @@ namespace Game_Client2._0
                                 {
                                     //更改現在位置並傳送資料給Server
                                     map.SetPos(player_ID, vertex, turn);
+                                    SetFigure(vertex, player_ID);
                                     String Msg = player_ID.ToString() + " " + Transport.SelectedIndex + " " + textBox2.Text + " \n";//Player Transportation position
                                     map.DeductTicket(player_ID, Transport.SelectedIndex);
                                     infobox.Text = infobox.Text + "你已移動到" + textBox2.Text + "\n";
@@ -441,6 +538,19 @@ namespace Game_Client2._0
             textBox1.Visible=true;
             restart.Visible = false;
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Point point = pictureBox1.PointToClient(Cursor.Position);
+            MessageBox.Show(point.ToString());
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+
 
     }
 }
