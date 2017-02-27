@@ -45,7 +45,7 @@ namespace Game_Server2._0
                 unit.Visible = is_Open;
             }
         }
-        private int Player=3,counter=0;
+        private int Player=5,counter=0;
         private void Set_Connect(){
             int Port = 1101;
             System.Net.IPAddress myIpAddress;
@@ -95,7 +95,7 @@ namespace Game_Server2._0
                 Random ranNum = new Random();
                 int temp = ranNum.Next(18);
                 Thread.Sleep(100);
-                if (!start_Point.Contains(temp))
+                if (!start_Point.Contains(initial_Point[temp]))
                 {
                     start_Point.Add(initial_Point[temp]);
                     count++;
@@ -139,6 +139,12 @@ namespace Game_Server2._0
                                 Broadcast_Data(msg);
                                 UpdateUI(msg, infobox);
                             }
+                        }
+                        else if (msg == "0000")
+                        {
+                            Disconnect();
+                            VisableUI(start, true);
+                            return;
                         }
                         
                     }

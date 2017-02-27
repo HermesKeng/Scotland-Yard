@@ -29,7 +29,7 @@ namespace Game_Client2._0
             }
             catch
             {
-                MessageBox.Show("connection fail");
+                MessageBox.Show("連線失敗");
                 Environment.Exit(0);
             }
         }
@@ -37,10 +37,17 @@ namespace Game_Client2._0
         {
             string rcv_msg = null;
             int datalength = myTcpClient.ReceiveBufferSize;
-            myByte = new Byte[datalength];
-            myNetworkStream.Read(myByte, 0, myByte.Length);
-            myNetworkStream.Flush();
-            rcv_msg = System.Text.Encoding.Unicode.GetString(myByte);
+            try
+            {
+                myByte = new Byte[datalength];
+                myNetworkStream.Read(myByte, 0, myByte.Length);
+                myNetworkStream.Flush();
+                rcv_msg = System.Text.Encoding.Unicode.GetString(myByte);
+            }
+            catch
+            {
+                Environment.Exit(0);
+            }
             return rcv_msg;
         }
         public void Send_Data(string msg)

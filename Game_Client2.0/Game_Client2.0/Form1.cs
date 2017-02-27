@@ -14,7 +14,8 @@ namespace Game_Client2._0
     {
         private int player_ID;
         private PictureBox[] figure=new PictureBox[5];
-        private int player_Sum=3;
+        private int player_Sum=5;
+        private bool isTwoStep = false;
         int turn = 1;
         private Client client = new Client();
         private Thread data_listener;
@@ -25,6 +26,7 @@ namespace Game_Client2._0
         private delegate void Visable(Control unit,bool is_Open);
         private delegate void setPos(Point new_pos, Control unit);
         private delegate void sendBack(Control unit);
+       
         private void SendBackUI(Control unit)
         {
             if (this.InvokeRequired)
@@ -104,23 +106,28 @@ namespace Game_Client2._0
             for (int i = 0; i < figure_sum; i++)
             {
                 figure[i] = new PictureBox();
-                figure[i].Size = new Size(15, 15);
+                figure[i].Size = new Size(25, 25);
                 figure[i].Location = new Point(10, 10);
                 switch(i%5){
                     case 0:
-                        figure[i].BackColor = Color.DarkOrchid;
+                        figure[i].Image=Game_Client2._0.Properties.Resources.Theft;//小偷顏色
+                        figure[i].SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
                         break;
                     case 1:
-                        figure[i].BackColor = Color.Yellow;
+                        figure[i].Image=Game_Client2._0.Properties.Resources.Police1;//警察一顏色
+                        figure[i].SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
                         break;
                     case 2:
-                        figure[i].BackColor = Color.Blue;
+                        figure[i].Image=Game_Client2._0.Properties.Resources.Police2;//警察二顏色
+                         figure[i].SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
                         break;
                     case 3:
-                        figure[i].BackColor = Color.OrangeRed;
+                        figure[i].Image=Game_Client2._0.Properties.Resources.Police3;//警察三顏色
+                        figure[i].SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
                         break;
                     case 4:
-                        figure[i].BackColor = Color.Brown;
+                        figure[i].Image=Game_Client2._0.Properties.Resources.Police4;//警察三顏色
+                        figure[i].SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
                         break;
                 }
                 figure[i].Visible = false;
@@ -132,9 +139,7 @@ namespace Game_Client2._0
         public Form1()
         {
             InitializeComponent();
-            ini_Figure();
-            
-            
+            ini_Figure(); 
         }
         void myButton_Click(Object sender, System.EventArgs e)
         {
@@ -143,12 +148,13 @@ namespace Game_Client2._0
         private void start_btn_Click(object sender, EventArgs e)
         {
             string IP_num;
-            IP_num = textBox1.Text;
+            IP_num = textBox1.Text;//Get IP position
             client.Set_IP(IP_num);
             client.connect(this);
-            textBox1.Visible = false;
-            start_btn.Visible = false;
-            player.Visible = true;
+            Login.Visible = false;
+            Player_Text.Visible = true;
+            game_panel.Visible = true;
+            Move_Panel.Visible = true;
             data_listener = new Thread(listen);
             data_listener.Name = "data_listener";
             data_listener.Start();
@@ -164,12 +170,12 @@ namespace Game_Client2._0
             Train_Ticket = map.GetTicket(player_ID, 2);
             All_Ticket = map.GetTicket(player_ID, 3);
             Double_Ticket = map.GetTicket(player_ID, 4);
-            msg = "目前還有：\n 計乘車票 " + Taxi_Ticket + " 張\n 公車票 " + Bus_Ticket + " 張\n 地鐵票 " + Train_Ticket + " 張\n";
+            msg = "計乘車票 " + Taxi_Ticket + " 張\n 公車票 " + Bus_Ticket + " 張\n 地鐵票 " + Train_Ticket + " 張\n";
             if (Double_Ticket != 0 && All_Ticket != 0||player_ID==1)
             {
                 msg = msg + " 萬用票 " + All_Ticket + " 張\n 兩步券 " + Double_Ticket + " 張\n";
             }
-            EditUI(msg, ticket);
+            EditUI(msg, Ticket);
             return ;
         }
         private void SetFigure(int point,int Player)
@@ -306,24 +312,25 @@ namespace Game_Client2._0
                             if (is_SamePos(map.GetPos(1, turn), Int32.Parse(moveData[2])) && Int32.Parse(moveData[0]) != 1)
                             {
                                 MessageBox.Show("於 " + moveData[2] + " 找到MR.X，警察獲勝!");
-                                //GameOver
+                                GameOver();
+                                return;
                             }
                         }
                     }
                     
-                    VisableUI(Transport, true);
-                    VisableUI(textBox2, true);
-                    VisableUI(move, true);
+                    VisableUI(Input_Panel, true);
                     //顯示移動時產生的元件
                     msg = client.Read_Data();
                     moveData = Decoding(msg);
                     
                     if (moveData[1] == "4")
                     {
+                        isTwoStep = true;
                         msg = client.Read_Data();
                         turn++;
                         AppendUI("------第 " + turn + " 回合------\n", infobox);
                         msg = client.Read_Data();
+                        isTwoStep = false;
                         
                     }
                     else
@@ -333,12 +340,12 @@ namespace Game_Client2._0
                         if (is_SamePos(map.GetPos(1, turn), Int32.Parse(moveData[2])) && Int32.Parse(moveData[0]) != 1)
                         {
                             MessageBox.Show("於 " + moveData[2] + " 找到MR.X，警察獲勝!");
+                            GameOver();
+                            return;
                             //GameOver
                         }
                     }
-                    VisableUI(textBox2, false);
-                    VisableUI(move, false);
-                    VisableUI(Transport, false);
+                    VisableUI(Input_Panel, false);
                     //關閉移動時產生的元件
                     //等待自己以後玩家移動
                     for (int i = player_Sum - player_ID; i > 0; i--)
@@ -358,6 +365,8 @@ namespace Game_Client2._0
                         if (is_SamePos(map.GetPos(1, turn), Int32.Parse(moveData[2])) && Int32.Parse(moveData[0]) != 1)
                         {
                             MessageBox.Show("於 "+moveData[2]+" 找到MR.X，警察獲勝!");
+                            GameOver();
+                            return;
                             //GameOver
                         }
                     }
@@ -367,19 +376,42 @@ namespace Game_Client2._0
                 }
             }
         }
+        private void GameOver()
+        {
+            client.Send_Data("0000");
+            client.DisConnect();
+            AppendUI("遊戲結束\n", infobox);
+            VisableUI(game_panel, false);
+            VisableUI(GameEnd, true);
+        }
         //遊戲按下START 後等待其他玩家入場
         private void listen()
         {
             string msg;
             msg = client.Read_Data();
             player_ID = Int32.Parse(msg[0].ToString());
-            if (player_ID == 1)
+            switch (player_ID)
             {
-                EditUI("玩家" + player_ID + ": MR.X", player);
-            }
-            else
-            {
-                EditUI("玩家" + player_ID + ": Police", player);
+                case 1:
+                    Player_Image.Image = Game_Client2._0.Properties.Resources.Theft;
+                    EditUI("玩家 " + player_ID + " : MR.X\n", Player_Text);
+                    break;
+                case 2:
+                    Player_Image.Image = Game_Client2._0.Properties.Resources.Police1;
+                    EditUI("玩家 " + player_ID + " : Police\n", Player_Text);
+                    break;
+                case 3:
+                    Player_Image.Image = Game_Client2._0.Properties.Resources.Police2;
+                    EditUI("玩家 " + player_ID + " : Police\n", Player_Text);
+                    break;
+                case 4:
+                    Player_Image.Image = Game_Client2._0.Properties.Resources.Police3;
+                    EditUI("玩家 " + player_ID + " : Police\n", Player_Text);
+                    break;
+                case 5:
+                    Player_Image.Image = Game_Client2._0.Properties.Resources.Police4;
+                    EditUI("玩家 " + player_ID + " : Police\n", Player_Text);
+                    break;
             }
             msg = client.Read_Data();//所有玩家已經加入遊戲
             AppendUI(msg, infobox);
@@ -392,9 +424,9 @@ namespace Game_Client2._0
         {
             bool is_Number=true;
             int vertex;
-            if (Transport.Text != ""&&map.CheckTicket(player_ID, Transport.SelectedIndex))
+            if (Transport.Text != "" && map.CheckTicket(player_ID, Transport.SelectedIndex))//檢查是否選擇交通方式和車票是否足夠
             {
-                if (Transport.SelectedIndex == 4)
+                if (Transport.SelectedIndex == 4&&!isTwoStep)
                 {
                     AppendUI("你使用了兩步券!\n", infobox);
                     map.DeductTicket(player_ID, Transport.SelectedIndex);
@@ -403,9 +435,9 @@ namespace Game_Client2._0
                 }
                 else
                 {
-                    try
+                    try//檢查Textbox中是否輸入非數字
                     {
-                        vertex = Int32.Parse(textBox2.Text.ToString());
+                        vertex = Int32.Parse(Input_TextBox.Text.ToString());
                     }
                     catch
                     {
@@ -414,7 +446,7 @@ namespace Game_Client2._0
                     if (is_Number)
                     {
 
-                        vertex = Int32.Parse(textBox2.Text.ToString());//欲前往位置
+                        vertex = Int32.Parse(Input_TextBox.Text.ToString());//欲前往位置
                         int pos = map.GetPos(player_ID, turn - 1);//現在位置
 
                         if (map.is_ConnectingVertex(pos, vertex, Transport.SelectedIndex))
@@ -452,15 +484,16 @@ namespace Game_Client2._0
                             }
                             if (!is_same)
                             {
-                                DialogResult myResult = MessageBox.Show(player_ID + "請確認是否前往" + textBox2.Text + "\n", " ", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                                DialogResult myResult = MessageBox.Show(player_ID + "請確認是否前往" + Input_TextBox.Text + "\n", " ", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                                 if (myResult == DialogResult.OK)
                                 {
                                     //更改現在位置並傳送資料給Server
                                     map.SetPos(player_ID, vertex, turn);
                                     SetFigure(vertex, player_ID);
-                                    String Msg = player_ID.ToString() + " " + Transport.SelectedIndex + " " + textBox2.Text + " \n";//Player Transportation position
+                                    String Msg = player_ID.ToString() + " " + Transport.SelectedIndex + " " + Input_TextBox.Text + " \n";//Player Transportation position
                                     map.DeductTicket(player_ID, Transport.SelectedIndex);
-                                    infobox.Text = infobox.Text + "你已移動到" + textBox2.Text + "\n";
+                                    infobox.Text = infobox.Text + "你已移動到" + Input_TextBox.Text + "\n";
+                                    infobox.ScrollToCaret();
                                     Renew_Ticket();
                                     client.Send_Data(Msg);
                                 }
@@ -468,7 +501,7 @@ namespace Game_Client2._0
                         }
                         else
                         {
-                            MessageBox.Show("請檢查是否相連或使用正確的交通方式\n");
+                            MessageBox.Show("請檢查是否相連\n");
                         }
                     }
                     else
@@ -479,14 +512,10 @@ namespace Game_Client2._0
             }
             else
             {
-                MessageBox.Show("車票不足\n");
+                MessageBox.Show("車票不足或使用正確的交通方式\n");
             }
             Transport.SelectedIndex = -1;
-            textBox2.Text = "";
-        }
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
+            Input_TextBox.Text = "";
         }
         //在遊戲過程中解析傳來的封包
         //------------------------------
@@ -508,16 +537,6 @@ namespace Game_Client2._0
             } while (positon > 0);
             return Data;
         }
-        private void ShowInfo()
-        {
-            String msg = "";
-            for (int i = 1; i <= player_Sum; i++)
-            {
-                msg = msg + "第" + i + "玩家在 " + map.GetPos(i,turn) + "\n";
-            }
-            //Debug 用
-            MessageBox.Show(msg, "第" + turn + "回合結果");
-        }
         //使用時機：
         //1.每一步動完後需要檢查是否和其他警察在同一地點
         //2.每次警察動完判定是否結束遊戲
@@ -532,22 +551,61 @@ namespace Game_Client2._0
         private void restart_Click(object sender, EventArgs e)
         {
             infobox.Text = "";
-            player.Text = "";
-            ticket.Text = "";
+            Player_Text.Text = "";
+            Ticket.Text = "";
             start_btn.Visible = true;
             textBox1.Visible=true;
             restart.Visible = false;
         }
+   
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.Width = Login.Width;
+            this.Height = Login.Height;
+        }
+        //預覽車票圖片用
+        private void Transport_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListBox list=(ListBox)sender;
+            switch (list.SelectedIndex){
+                case 0:
+                    //計程車票
+                    TransportPic.Image = Game_Client2._0.Properties.Resources.Taxi;
+                    break;
+                case 1:
+                    //公車票
+                    TransportPic.Image = Game_Client2._0.Properties.Resources.Bus;
+                    break;
+                case 2:
+                     //地鐵票
+                    TransportPic.Image = Game_Client2._0.Properties.Resources.Train;
+                    break;
+                case 3:
+                    //萬用票
+                    TransportPic.Image = Game_Client2._0.Properties.Resources.all;
+                    break;
+                case 4:
+                    //兩步卡
+                    TransportPic.Image = Game_Client2._0.Properties.Resources._double;
+                    break;
 
+            }
+        }
+        //遊戲製作時或Debug時使用
+        private void ShowInfo()
+        {
+            String msg = "";
+            for (int i = 1; i <= player_Sum; i++)
+            {
+                msg = msg + "第" + i + "玩家在 " + map.GetPos(i, turn) + "\n";
+            }
+            //Debug 用
+            MessageBox.Show(msg, "第" + turn + "回合結果");
+        }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             Point point = pictureBox1.PointToClient(Cursor.Position);
             MessageBox.Show(point.ToString());
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
         }
 
 

@@ -81,6 +81,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Police_Win.jpeg" />
+    <None Include="Resources\Police1.jpeg" />
+    <None Include="Resources\Police2.jpeg" />
+    <None Include="Resources\Police3.jpeg" />
+    <None Include="Resources\Police4.jpeg" />
+    <None Include="Resources\Theft.jpeg" />
+    <None Include="Resources\all.png" />
+    <None Include="Resources\Bus.png" />
+    <None Include="Resources\Taxi.png" />
+    <None Include="Resources\Train.png" />
+    <None Include="Resources\defaultTic.png" />
+    <None Include="Resources\double.png" />
     <Content Include="Resources\地圖.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

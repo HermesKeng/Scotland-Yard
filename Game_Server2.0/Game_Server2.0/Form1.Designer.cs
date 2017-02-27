@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.infobox = new System.Windows.Forms.RichTextBox();
             this.start = new System.Windows.Forms.Button();
             this.restart = new System.Windows.Forms.Button();
@@ -71,6 +72,7 @@
             this.Controls.Add(this.restart);
             this.Controls.Add(this.start);
             this.Controls.Add(this.infobox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
