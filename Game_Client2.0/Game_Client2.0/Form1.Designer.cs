@@ -35,14 +35,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.start_btn = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.GameEnd = new System.Windows.Forms.Panel();
+            this.ResultPic = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.Result_Text = new System.Windows.Forms.Label();
+            this.Close = new System.Windows.Forms.Button();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.Left_Panel = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.FudenmentalInfo = new System.Windows.Forms.Panel();
-            this.Player_Text = new System.Windows.Forms.Label();
-            this.Player_Image = new System.Windows.Forms.PictureBox();
-            this.RecordBox = new System.Windows.Forms.Panel();
-            this.RecordBox_Title = new System.Windows.Forms.Label();
-            this.infobox = new System.Windows.Forms.RichTextBox();
+            this.Right_Panel = new System.Windows.Forms.Panel();
             this.Move_Panel = new System.Windows.Forms.FlowLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.Ticket = new System.Windows.Forms.RichTextBox();
@@ -51,29 +52,29 @@
             this.move = new System.Windows.Forms.Button();
             this.Transport = new System.Windows.Forms.ListBox();
             this.Input_TextBox = new System.Windows.Forms.TextBox();
-            this.TutorialInfo = new System.Windows.Forms.Panel();
-            this.GameEnd = new System.Windows.Forms.Panel();
-            this.ResultPic = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.Result_Text = new System.Windows.Forms.Label();
-            this.restart = new System.Windows.Forms.Button();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.RecordBox = new System.Windows.Forms.Panel();
+            this.RecordBox_Title = new System.Windows.Forms.Label();
+            this.infobox = new System.Windows.Forms.RichTextBox();
+            this.FudenmentalInfo = new System.Windows.Forms.Panel();
+            this.Player_Text = new System.Windows.Forms.Label();
+            this.Player_Image = new System.Windows.Forms.PictureBox();
             this.game_panel = new System.Windows.Forms.Panel();
             this.clientBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Login.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.FudenmentalInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Player_Image)).BeginInit();
-            this.RecordBox.SuspendLayout();
-            this.Move_Panel.SuspendLayout();
-            this.Input_Panel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TransportPic)).BeginInit();
             this.GameEnd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ResultPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.Left_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.Right_Panel.SuspendLayout();
+            this.Move_Panel.SuspendLayout();
+            this.Input_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TransportPic)).BeginInit();
+            this.RecordBox.SuspendLayout();
+            this.FudenmentalInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Player_Image)).BeginInit();
             this.game_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).BeginInit();
@@ -139,19 +140,93 @@
             this.start_btn.UseVisualStyleBackColor = false;
             this.start_btn.Click += new System.EventHandler(this.start_btn_Click);
             // 
-            // panel1
+            // GameEnd
             // 
-            this.panel1.AutoScroll = true;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1067, 759);
-            this.panel1.TabIndex = 19;
+            this.GameEnd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.GameEnd.Controls.Add(this.ResultPic);
+            this.GameEnd.Controls.Add(this.label2);
+            this.GameEnd.Controls.Add(this.Result_Text);
+            this.GameEnd.Controls.Add(this.Close);
+            this.GameEnd.Controls.Add(this.pictureBox3);
+            this.GameEnd.Location = new System.Drawing.Point(0, 0);
+            this.GameEnd.Margin = new System.Windows.Forms.Padding(0);
+            this.GameEnd.Name = "GameEnd";
+            this.GameEnd.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.GameEnd.Size = new System.Drawing.Size(334, 225);
+            this.GameEnd.TabIndex = 6;
+            this.GameEnd.Visible = false;
+            // 
+            // ResultPic
+            // 
+            this.ResultPic.Location = new System.Drawing.Point(16, 53);
+            this.ResultPic.Name = "ResultPic";
+            this.ResultPic.Size = new System.Drawing.Size(194, 100);
+            this.ResultPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ResultPic.TabIndex = 21;
+            this.ResultPic.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label2.Location = new System.Drawing.Point(233, 90);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(67, 24);
+            this.label2.TabIndex = 20;
+            this.label2.Text = "獲勝！";
+            // 
+            // Result_Text
+            // 
+            this.Result_Text.AutoSize = true;
+            this.Result_Text.Font = new System.Drawing.Font("微軟正黑體", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.Result_Text.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.Result_Text.Location = new System.Drawing.Point(111, 12);
+            this.Result_Text.Name = "Result_Text";
+            this.Result_Text.Size = new System.Drawing.Size(110, 31);
+            this.Result_Text.TabIndex = 19;
+            this.Result_Text.Text = "遊戲結果";
+            // 
+            // Close
+            // 
+            this.Close.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(153)))), ((int)(((byte)(53)))));
+            this.Close.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(153)))), ((int)(((byte)(53)))));
+            this.Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Close.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.Close.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.Close.Location = new System.Drawing.Point(216, 159);
+            this.Close.Name = "Close";
+            this.Close.Size = new System.Drawing.Size(100, 51);
+            this.Close.TabIndex = 18;
+            this.Close.Text = "Close";
+            this.Close.UseVisualStyleBackColor = false;
+            this.Close.Click += new System.EventHandler(this.Close_Click);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(16, 159);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(194, 51);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 5;
+            this.pictureBox3.TabStop = false;
+            // 
+            // Left_Panel
+            // 
+            this.Left_Panel.AutoScroll = true;
+            this.Left_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Left_Panel.Controls.Add(this.pictureBox1);
+            this.Left_Panel.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.Left_Panel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.Left_Panel.Location = new System.Drawing.Point(3, 3);
+            this.Left_Panel.Name = "Left_Panel";
+            this.Left_Panel.Size = new System.Drawing.Size(922, 635);
+            this.Left_Panel.TabIndex = 19;
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
@@ -160,78 +235,18 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.WaitOnLoad = true;
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
-            // FudenmentalInfo
+            // Right_Panel
             // 
-            this.FudenmentalInfo.Controls.Add(this.Player_Text);
-            this.FudenmentalInfo.Controls.Add(this.Player_Image);
-            this.FudenmentalInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.FudenmentalInfo.Location = new System.Drawing.Point(1070, 3);
-            this.FudenmentalInfo.Name = "FudenmentalInfo";
-            this.FudenmentalInfo.Size = new System.Drawing.Size(341, 61);
-            this.FudenmentalInfo.TabIndex = 20;
-            // 
-            // Player_Text
-            // 
-            this.Player_Text.AutoSize = true;
-            this.Player_Text.Font = new System.Drawing.Font("微軟正黑體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.Player_Text.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.Player_Text.Location = new System.Drawing.Point(87, 12);
-            this.Player_Text.Name = "Player_Text";
-            this.Player_Text.Size = new System.Drawing.Size(0, 40);
-            this.Player_Text.TabIndex = 17;
-            this.Player_Text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Player_Image
-            // 
-            this.Player_Image.Location = new System.Drawing.Point(8, 6);
-            this.Player_Image.Name = "Player_Image";
-            this.Player_Image.Size = new System.Drawing.Size(72, 50);
-            this.Player_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.Player_Image.TabIndex = 0;
-            this.Player_Image.TabStop = false;
-            // 
-            // RecordBox
-            // 
-            this.RecordBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RecordBox.Controls.Add(this.RecordBox_Title);
-            this.RecordBox.Controls.Add(this.infobox);
-            this.RecordBox.Location = new System.Drawing.Point(1070, 461);
-            this.RecordBox.Name = "RecordBox";
-            this.RecordBox.Padding = new System.Windows.Forms.Padding(3);
-            this.RecordBox.Size = new System.Drawing.Size(341, 301);
-            this.RecordBox.TabIndex = 21;
-            // 
-            // RecordBox_Title
-            // 
-            this.RecordBox_Title.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RecordBox_Title.AutoSize = true;
-            this.RecordBox_Title.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RecordBox_Title.Font = new System.Drawing.Font("微軟正黑體", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.RecordBox_Title.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.RecordBox_Title.Location = new System.Drawing.Point(106, 3);
-            this.RecordBox_Title.Name = "RecordBox_Title";
-            this.RecordBox_Title.Size = new System.Drawing.Size(134, 31);
-            this.RecordBox_Title.TabIndex = 3;
-            this.RecordBox_Title.Text = "遊戲記錄表";
-            this.RecordBox_Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // infobox
-            // 
-            this.infobox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.infobox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.infobox.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.infobox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.infobox.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.infobox.Location = new System.Drawing.Point(3, 34);
-            this.infobox.Name = "infobox";
-            this.infobox.ReadOnly = true;
-            this.infobox.Size = new System.Drawing.Size(335, 264);
-            this.infobox.TabIndex = 2;
-            this.infobox.Text = "";
+            this.Right_Panel.Controls.Add(this.Move_Panel);
+            this.Right_Panel.Controls.Add(this.RecordBox);
+            this.Right_Panel.Controls.Add(this.FudenmentalInfo);
+            this.Right_Panel.Location = new System.Drawing.Point(925, 3);
+            this.Right_Panel.Name = "Right_Panel";
+            this.Right_Panel.Size = new System.Drawing.Size(320, 632);
+            this.Right_Panel.TabIndex = 23;
             // 
             // Move_Panel
             // 
@@ -239,10 +254,10 @@
             this.Move_Panel.Controls.Add(this.Ticket);
             this.Move_Panel.Controls.Add(this.Input_Panel);
             this.Move_Panel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.Move_Panel.Location = new System.Drawing.Point(1076, 319);
+            this.Move_Panel.Location = new System.Drawing.Point(3, 186);
             this.Move_Panel.Name = "Move_Panel";
-            this.Move_Panel.Size = new System.Drawing.Size(335, 136);
-            this.Move_Panel.TabIndex = 22;
+            this.Move_Panel.Size = new System.Drawing.Size(309, 136);
+            this.Move_Panel.TabIndex = 25;
             // 
             // label3
             // 
@@ -334,98 +349,88 @@
             this.Input_TextBox.Size = new System.Drawing.Size(110, 29);
             this.Input_TextBox.TabIndex = 6;
             // 
-            // TutorialInfo
+            // RecordBox
             // 
-            this.TutorialInfo.Location = new System.Drawing.Point(1074, 67);
-            this.TutorialInfo.Name = "TutorialInfo";
-            this.TutorialInfo.Size = new System.Drawing.Size(158, 188);
-            this.TutorialInfo.TabIndex = 23;
+            this.RecordBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RecordBox.Controls.Add(this.RecordBox_Title);
+            this.RecordBox.Controls.Add(this.infobox);
+            this.RecordBox.Location = new System.Drawing.Point(3, 325);
+            this.RecordBox.Name = "RecordBox";
+            this.RecordBox.Padding = new System.Windows.Forms.Padding(3);
+            this.RecordBox.Size = new System.Drawing.Size(314, 312);
+            this.RecordBox.TabIndex = 24;
             // 
-            // GameEnd
+            // RecordBox_Title
             // 
-            this.GameEnd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.GameEnd.Controls.Add(this.ResultPic);
-            this.GameEnd.Controls.Add(this.label2);
-            this.GameEnd.Controls.Add(this.Result_Text);
-            this.GameEnd.Controls.Add(this.restart);
-            this.GameEnd.Controls.Add(this.pictureBox3);
-            this.GameEnd.Location = new System.Drawing.Point(1263, 230);
-            this.GameEnd.Margin = new System.Windows.Forms.Padding(0);
-            this.GameEnd.Name = "GameEnd";
-            this.GameEnd.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.GameEnd.Size = new System.Drawing.Size(334, 225);
-            this.GameEnd.TabIndex = 6;
-            this.GameEnd.Visible = false;
+            this.RecordBox_Title.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RecordBox_Title.AutoSize = true;
+            this.RecordBox_Title.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RecordBox_Title.Font = new System.Drawing.Font("微軟正黑體", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.RecordBox_Title.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.RecordBox_Title.Location = new System.Drawing.Point(80, 6);
+            this.RecordBox_Title.Name = "RecordBox_Title";
+            this.RecordBox_Title.Size = new System.Drawing.Size(134, 31);
+            this.RecordBox_Title.TabIndex = 3;
+            this.RecordBox_Title.Text = "遊戲記錄表";
+            this.RecordBox_Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ResultPic
+            // infobox
             // 
-            this.ResultPic.Location = new System.Drawing.Point(16, 53);
-            this.ResultPic.Name = "ResultPic";
-            this.ResultPic.Size = new System.Drawing.Size(194, 100);
-            this.ResultPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ResultPic.TabIndex = 21;
-            this.ResultPic.TabStop = false;
+            this.infobox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.infobox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.infobox.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.infobox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.infobox.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.infobox.Location = new System.Drawing.Point(3, 45);
+            this.infobox.Name = "infobox";
+            this.infobox.ReadOnly = true;
+            this.infobox.Size = new System.Drawing.Size(308, 264);
+            this.infobox.TabIndex = 2;
+            this.infobox.Text = "";
             // 
-            // label2
+            // FudenmentalInfo
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label2.Location = new System.Drawing.Point(233, 90);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 24);
-            this.label2.TabIndex = 20;
-            this.label2.Text = "獲勝！";
+            this.FudenmentalInfo.Controls.Add(this.Player_Text);
+            this.FudenmentalInfo.Controls.Add(this.Player_Image);
+            this.FudenmentalInfo.Location = new System.Drawing.Point(3, 3);
+            this.FudenmentalInfo.Name = "FudenmentalInfo";
+            this.FudenmentalInfo.Size = new System.Drawing.Size(325, 61);
+            this.FudenmentalInfo.TabIndex = 23;
             // 
-            // Result_Text
+            // Player_Text
             // 
-            this.Result_Text.AutoSize = true;
-            this.Result_Text.Font = new System.Drawing.Font("微軟正黑體", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.Result_Text.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.Result_Text.Location = new System.Drawing.Point(111, 12);
-            this.Result_Text.Name = "Result_Text";
-            this.Result_Text.Size = new System.Drawing.Size(110, 31);
-            this.Result_Text.TabIndex = 19;
-            this.Result_Text.Text = "遊戲結果";
+            this.Player_Text.AutoSize = true;
+            this.Player_Text.Font = new System.Drawing.Font("微軟正黑體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.Player_Text.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.Player_Text.Location = new System.Drawing.Point(87, 12);
+            this.Player_Text.Name = "Player_Text";
+            this.Player_Text.Size = new System.Drawing.Size(0, 40);
+            this.Player_Text.TabIndex = 17;
+            this.Player_Text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // restart
+            // Player_Image
             // 
-            this.restart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(153)))), ((int)(((byte)(53)))));
-            this.restart.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(153)))), ((int)(((byte)(53)))));
-            this.restart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.restart.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.restart.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.restart.Location = new System.Drawing.Point(216, 159);
-            this.restart.Name = "restart";
-            this.restart.Size = new System.Drawing.Size(100, 51);
-            this.restart.TabIndex = 18;
-            this.restart.Text = "Restart";
-            this.restart.UseVisualStyleBackColor = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(16, 159);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(194, 51);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 5;
-            this.pictureBox3.TabStop = false;
+            this.Player_Image.Location = new System.Drawing.Point(8, 6);
+            this.Player_Image.Name = "Player_Image";
+            this.Player_Image.Size = new System.Drawing.Size(72, 50);
+            this.Player_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.Player_Image.TabIndex = 0;
+            this.Player_Image.TabStop = false;
             // 
             // game_panel
             // 
             this.game_panel.BackColor = System.Drawing.Color.Transparent;
-            this.game_panel.Controls.Add(this.Move_Panel);
-            this.game_panel.Controls.Add(this.TutorialInfo);
-            this.game_panel.Controls.Add(this.RecordBox);
-            this.game_panel.Controls.Add(this.FudenmentalInfo);
-            this.game_panel.Controls.Add(this.panel1);
+            this.game_panel.Controls.Add(this.Right_Panel);
+            this.game_panel.Controls.Add(this.Left_Panel);
             this.game_panel.Location = new System.Drawing.Point(0, 0);
             this.game_panel.Margin = new System.Windows.Forms.Padding(0);
             this.game_panel.Name = "game_panel";
             this.game_panel.Padding = new System.Windows.Forms.Padding(3);
-            this.game_panel.Size = new System.Drawing.Size(1414, 765);
-            this.game_panel.TabIndex = 3;
+            this.game_panel.Size = new System.Drawing.Size(1243, 641);
+            this.game_panel.TabIndex = 8;
             this.game_panel.Visible = false;
             // 
             // clientBindingSource
@@ -438,17 +443,19 @@
             // 
             // Form1
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(1413, 723);
+            this.ClientSize = new System.Drawing.Size(1245, 641);
             this.Controls.Add(this.game_panel);
             this.Controls.Add(this.Login);
             this.Controls.Add(this.GameEnd);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TEP工人訓-蘇格蘭特警";
@@ -456,22 +463,23 @@
             this.Login.ResumeLayout(false);
             this.Login.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.panel1.ResumeLayout(false);
+            this.GameEnd.ResumeLayout(false);
+            this.GameEnd.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResultPic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.Left_Panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.FudenmentalInfo.ResumeLayout(false);
-            this.FudenmentalInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Player_Image)).EndInit();
-            this.RecordBox.ResumeLayout(false);
-            this.RecordBox.PerformLayout();
+            this.Right_Panel.ResumeLayout(false);
             this.Move_Panel.ResumeLayout(false);
             this.Move_Panel.PerformLayout();
             this.Input_Panel.ResumeLayout(false);
             this.Input_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TransportPic)).EndInit();
-            this.GameEnd.ResumeLayout(false);
-            this.GameEnd.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ResultPic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.RecordBox.ResumeLayout(false);
+            this.RecordBox.PerformLayout();
+            this.FudenmentalInfo.ResumeLayout(false);
+            this.FudenmentalInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Player_Image)).EndInit();
             this.game_panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).EndInit();
@@ -488,31 +496,30 @@
         private System.Windows.Forms.Button start_btn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox2;
- 
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Panel FudenmentalInfo;
-        private System.Windows.Forms.Label Player_Text;
-        private System.Windows.Forms.PictureBox Player_Image;
-        private System.Windows.Forms.Panel RecordBox;
-        private System.Windows.Forms.Label RecordBox_Title;
-        public System.Windows.Forms.RichTextBox infobox;
-        private System.Windows.Forms.FlowLayoutPanel Move_Panel;
-        private System.Windows.Forms.Panel Input_Panel;
-        private System.Windows.Forms.Button move;
-        private System.Windows.Forms.ListBox Transport;
-        private System.Windows.Forms.TextBox Input_TextBox;
-        private System.Windows.Forms.Panel TutorialInfo;
         private System.Windows.Forms.Panel GameEnd;
         private System.Windows.Forms.PictureBox ResultPic;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label Result_Text;
-        private System.Windows.Forms.Button restart;
+        private System.Windows.Forms.Button Close;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Panel game_panel;
-        private System.Windows.Forms.RichTextBox Ticket;
+        private System.Windows.Forms.Panel Left_Panel;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel Right_Panel;
+        private System.Windows.Forms.FlowLayoutPanel Move_Panel;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RichTextBox Ticket;
+        private System.Windows.Forms.Panel Input_Panel;
         private System.Windows.Forms.PictureBox TransportPic;
+        private System.Windows.Forms.Button move;
+        private System.Windows.Forms.ListBox Transport;
+        private System.Windows.Forms.TextBox Input_TextBox;
+        private System.Windows.Forms.Panel RecordBox;
+        private System.Windows.Forms.Label RecordBox_Title;
+        public System.Windows.Forms.RichTextBox infobox;
+        private System.Windows.Forms.Panel FudenmentalInfo;
+        private System.Windows.Forms.Label Player_Text;
+        private System.Windows.Forms.PictureBox Player_Image;
+        private System.Windows.Forms.Panel game_panel;
     }
 }
 

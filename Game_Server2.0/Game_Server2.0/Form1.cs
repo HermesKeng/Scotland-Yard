@@ -45,7 +45,7 @@ namespace Game_Server2._0
                 unit.Visible = is_Open;
             }
         }
-        private int Player=5,counter=0;
+        private int Player=3,counter=0;
         private void Set_Connect(){
             int Port = 1101;
             System.Net.IPAddress myIpAddress;
@@ -61,20 +61,40 @@ namespace Game_Server2._0
         }
         private void Broadcast_Data(string msg)
         {
-            myByte = Encoding.Unicode.GetBytes(msg);
+            try
+            {
+                myByte = Encoding.Unicode.GetBytes(msg);
+            }
+            catch
+            {
+
+            }
             for (int i = 0; i < Player; i++)
             {
-                ns_List[i].Write(myByte, 0, myByte.Length);
-                Thread.Sleep(100);
+                try
+                {
+                    ns_List[i].Write(myByte, 0, myByte.Length);
+                    Thread.Sleep(100);
+                }
+                catch
+                {
+
+                }
             }
         }
         private String Read_Data(int i)
         {
             string msg = null;
-            int datalength = myTcpListener.Server.ReceiveBufferSize;
-            myByte = new Byte[datalength];
-            ns_List[i].Read(myByte, 0, myByte.Length);
-            msg = System.Text.Encoding.Unicode.GetString(myByte);
+            try
+            {
+                int datalength = myTcpListener.Server.ReceiveBufferSize;
+                myByte = new Byte[datalength];
+                ns_List[i].Read(myByte, 0, myByte.Length);
+                msg = System.Text.Encoding.Unicode.GetString(myByte);
+            }catch
+            {
+
+            }
             return msg;
         }
         public Form1()
@@ -138,6 +158,10 @@ namespace Game_Server2._0
                                 msg = Read_Data(i);
                                 Broadcast_Data(msg);
                                 UpdateUI(msg, infobox);
+                                if (j == 0)
+                                {
+                                    turn++;
+                                }
                             }
                         }
                         else if (msg == "0000")
