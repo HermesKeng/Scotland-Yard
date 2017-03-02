@@ -45,7 +45,7 @@ namespace Game_Server2._0
                 unit.Visible = is_Open;
             }
         }
-        private int Player=3,counter=0;
+        private int Player=5,counter=0;
         private void Set_Connect(){
             int Port = 1101;
             System.Net.IPAddress myIpAddress;
@@ -85,16 +85,14 @@ namespace Game_Server2._0
         private String Read_Data(int i)
         {
             string msg = null;
-            try
+            int datalength = myTcpListener.Server.ReceiveBufferSize;
+            myByte = new Byte[datalength];
+            int a=ns_List[i].Read(myByte, 0, myByte.Length);
+            if (a> 0)
             {
-                int datalength = myTcpListener.Server.ReceiveBufferSize;
-                myByte = new Byte[datalength];
-                ns_List[i].Read(myByte, 0, myByte.Length);
                 msg = System.Text.Encoding.Unicode.GetString(myByte);
-            }catch
-            {
-
             }
+
             return msg;
         }
         public Form1()
@@ -109,7 +107,14 @@ namespace Game_Server2._0
                                     138,141,155,174,197,198 };
             List<int> start_Point = new List<int>();
             String msg = null;
-            int count = 0,turn=1;
+            int count = 0,turn=1;//如果要強迫修改起始點!!!!!意外狀況發生時
+            /*
+              start_Point.Add(initial_Point[temp]);
+              start_Point.Add(initial_Point[temp]);
+              start_Point.Add(initial_Point[temp]);
+              start_Point.Add(initial_Point[temp]);
+              start_Point.Add(initial_Point[temp]);
+             */
             while (count < Player)
             {
                 Random ranNum = new Random();
@@ -151,24 +156,39 @@ namespace Game_Server2._0
                         msg = Read_Data(i);
                         Broadcast_Data(msg);
                         UpdateUI(msg, infobox);
-                        if (msg[2] == '4')
+                        if (msg[0] == '1')
                         {
-                            for (int j = 0; j < 2; j++)
+                            if (msg[2] == '4')
                             {
-                                msg = Read_Data(i);
-                                Broadcast_Data(msg);
-                                UpdateUI(msg, infobox);
-                                if (j == 0)
+                                for (int j = 0; j < 2; j++)
                                 {
-                                    turn++;
+                                    msg = Read_Data(i);
+                                    Broadcast_Data(msg);
+                                    UpdateUI(msg, infobox);
+                                    if (j == 0)
+                                    {
+                                        turn++;
+                                    }
                                 }
                             }
                         }
-                        else if (msg == "0000")
+                        else
                         {
-                            Disconnect();
-                            VisableUI(start, true);
-                            return;
+                             Thread.Sleep(300);
+                             msg = Read_Data(i);
+                            
+                             if (Int32.Parse(msg) == 1000)
+                             {
+                                 Broadcast_Data(msg);
+                                 Disconnect();
+                                 VisableUI(start, true);
+                                 return;
+                             }
+                             else
+                             {
+                                 //nothing
+                                 Broadcast_Data(msg);
+                             }
                         }
                         
                     }

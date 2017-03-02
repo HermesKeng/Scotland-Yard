@@ -37,17 +37,12 @@ namespace Game_Client2._0
         {
             string rcv_msg = null;
             int datalength = myTcpClient.ReceiveBufferSize;
-            try
-            {
-                myByte = new Byte[datalength];
-                myNetworkStream.Read(myByte, 0, myByte.Length);
-                myNetworkStream.Flush();
-                rcv_msg = System.Text.Encoding.Unicode.GetString(myByte);
-            }
-            catch
-            {
-                Environment.Exit(0);
-            }
+            myByte = new Byte[datalength];
+
+            //正常連線
+            myNetworkStream.Read(myByte, 0, myByte.Length);
+            myNetworkStream.Flush();
+            rcv_msg = System.Text.Encoding.Unicode.GetString(myByte);
             return rcv_msg;
         }
         public void Send_Data(string msg)

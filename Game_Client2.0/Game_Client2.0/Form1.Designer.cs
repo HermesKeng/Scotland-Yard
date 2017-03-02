@@ -36,7 +36,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.start_btn = new System.Windows.Forms.Button();
             this.GameEnd = new System.Windows.Forms.Panel();
-            this.ResultPic = new System.Windows.Forms.PictureBox();
+            this.ResultPic_Police = new System.Windows.Forms.PictureBox();
+            this.ResultPic_Theft = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.Result_Text = new System.Windows.Forms.Label();
             this.Close = new System.Windows.Forms.Button();
@@ -61,10 +62,12 @@
             this.game_panel = new System.Windows.Forms.Panel();
             this.clientBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Tip = new System.Windows.Forms.Label();
             this.Login.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.GameEnd.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ResultPic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ResultPic_Police)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ResultPic_Theft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.Left_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -143,7 +146,8 @@
             // GameEnd
             // 
             this.GameEnd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.GameEnd.Controls.Add(this.ResultPic);
+            this.GameEnd.Controls.Add(this.ResultPic_Police);
+            this.GameEnd.Controls.Add(this.ResultPic_Theft);
             this.GameEnd.Controls.Add(this.label2);
             this.GameEnd.Controls.Add(this.Result_Text);
             this.GameEnd.Controls.Add(this.Close);
@@ -156,14 +160,27 @@
             this.GameEnd.TabIndex = 6;
             this.GameEnd.Visible = false;
             // 
-            // ResultPic
+            // ResultPic_Police
             // 
-            this.ResultPic.Location = new System.Drawing.Point(16, 53);
-            this.ResultPic.Name = "ResultPic";
-            this.ResultPic.Size = new System.Drawing.Size(194, 100);
-            this.ResultPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ResultPic.TabIndex = 21;
-            this.ResultPic.TabStop = false;
+            this.ResultPic_Police.Image = global::Game_Client2._0.Properties.Resources.Police_Win;
+            this.ResultPic_Police.Location = new System.Drawing.Point(16, 53);
+            this.ResultPic_Police.Name = "ResultPic_Police";
+            this.ResultPic_Police.Size = new System.Drawing.Size(194, 100);
+            this.ResultPic_Police.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ResultPic_Police.TabIndex = 22;
+            this.ResultPic_Police.TabStop = false;
+            this.ResultPic_Police.Visible = false;
+            // 
+            // ResultPic_Theft
+            // 
+            this.ResultPic_Theft.Image = global::Game_Client2._0.Properties.Resources.Theft;
+            this.ResultPic_Theft.Location = new System.Drawing.Point(16, 53);
+            this.ResultPic_Theft.Name = "ResultPic_Theft";
+            this.ResultPic_Theft.Size = new System.Drawing.Size(194, 100);
+            this.ResultPic_Theft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ResultPic_Theft.TabIndex = 21;
+            this.ResultPic_Theft.TabStop = false;
+            this.ResultPic_Theft.Visible = false;
             // 
             // label2
             // 
@@ -240,6 +257,7 @@
             // 
             // Right_Panel
             // 
+            this.Right_Panel.Controls.Add(this.Tip);
             this.Right_Panel.Controls.Add(this.Move_Panel);
             this.Right_Panel.Controls.Add(this.RecordBox);
             this.Right_Panel.Controls.Add(this.FudenmentalInfo);
@@ -441,6 +459,18 @@
             // 
             this.form1BindingSource.DataSource = typeof(Game_Client2._0.Form1);
             // 
+            // Tip
+            // 
+            this.Tip.AutoSize = true;
+            this.Tip.Font = new System.Drawing.Font("微軟正黑體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.Tip.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.Tip.Location = new System.Drawing.Point(19, 79);
+            this.Tip.Name = "Tip";
+            this.Tip.Size = new System.Drawing.Size(280, 95);
+            this.Tip.TabIndex = 26;
+            this.Tip.Text = "●小幫手：\r\n1.請先選擇交通方式再輸入指定位置\r\n2.MR.X於第3、8、13、18、22回合現身\r\n3.遊戲記錄表是觀看MR.X動向的依據\r\n4.請隨時注意車" +
+    "票是否充足";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -453,9 +483,9 @@
             this.ClientSize = new System.Drawing.Size(1245, 641);
             this.Controls.Add(this.game_panel);
             this.Controls.Add(this.Login);
-            this.Controls.Add(this.GameEnd);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TEP工人訓-蘇格蘭特警";
@@ -465,11 +495,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.GameEnd.ResumeLayout(false);
             this.GameEnd.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ResultPic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ResultPic_Police)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ResultPic_Theft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.Left_Panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.Right_Panel.ResumeLayout(false);
+            this.Right_Panel.PerformLayout();
             this.Move_Panel.ResumeLayout(false);
             this.Move_Panel.PerformLayout();
             this.Input_Panel.ResumeLayout(false);
@@ -497,7 +529,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Panel GameEnd;
-        private System.Windows.Forms.PictureBox ResultPic;
+        private System.Windows.Forms.PictureBox ResultPic_Theft;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label Result_Text;
         private System.Windows.Forms.Button Close;
@@ -520,6 +552,8 @@
         private System.Windows.Forms.Label Player_Text;
         private System.Windows.Forms.PictureBox Player_Image;
         private System.Windows.Forms.Panel game_panel;
+        private System.Windows.Forms.PictureBox ResultPic_Police;
+        private System.Windows.Forms.Label Tip;
     }
 }
 

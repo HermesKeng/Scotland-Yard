@@ -14,9 +14,9 @@ namespace Game_Client2._0
     {
         private int player_ID;
         private PictureBox[] figure=new PictureBox[5];
-        private int player_Sum=3;
+        private int player_Sum=5;
         private bool isTwoStep = false;
-        int turn = 1;
+        int turn = 0;
         private Client client = new Client();
         private Thread data_listener;
         private Map map ;
@@ -38,7 +38,14 @@ namespace Game_Client2._0
             else
             {
                 rtb.Text += value;
-                rtb.SelectionStart = rtb.Text.Length;
+                try
+                {
+                    rtb.SelectionStart = rtb.Text.Length;
+                }
+                catch
+                {
+
+                }
                 rtb.ScrollToCaret();
             }
         }
@@ -129,7 +136,6 @@ namespace Game_Client2._0
             Player_Text.Visible = true;
             game_panel.Visible = true;
             Move_Panel.Visible = true;
-
             data_listener = new Thread(listen);
             data_listener.Name = "data_listener";
             data_listener.Start();
@@ -138,7 +144,7 @@ namespace Game_Client2._0
         private void Ini_SetUp()
         {
             String msg;
-            turn = 1;
+            turn =1;
             map = new Map();
             //遊戲開始
             //遊戲配置-隨機分配開始位置
@@ -158,7 +164,19 @@ namespace Game_Client2._0
                 }
             } while (positon > 0);
 
-            SetInfoBox("你的初始位置 " + map.GetPos(player_ID, turn - 1) + "\n", infobox);
+            for (int i = 1; i <= player_Sum; i++) {
+                if (i == player_ID)
+                {
+                    SetInfoBox("你的初始位置 " + map.GetPos(player_ID, turn - 1) + "\n", infobox);
+                }
+                else
+                {
+                    if (i != 1)
+                    {
+                        SetInfoBox("玩家 "+i +"的初始位置 "+ map.GetPos(i, turn - 1) + "\n", infobox);
+                    }
+                }
+            }
             MessageBox.Show("你的初始位置 " + map.GetPos(player_ID, turn - 1) + "\n");
             //設立棋子位置
             int point = map.GetPos(player_ID, turn - 1);
@@ -181,84 +199,204 @@ namespace Game_Client2._0
             }
             Renew_Ticket();
         }
-        /*private void Game()
+        private bool is_ShowPos()
+        {
+            if (turn == 3 || turn == 8 || turn == 13 || turn == 18)
+            {
+                if (player_ID == 1)
+                {
+                    MessageBox.Show("本回合你的位置將被公佈\n");
+                }
+                else
+                {
+                    MessageBox.Show("本回合MR.X的位置將被公佈");
+                }
+                return true;
+            }
+            return false;
+        }
+        
+        private void Game()
         {
             Ini_SetUp();
             String msg;
             String[] moveData;
+            bool is_Special = false;
             //執行回合，輪流移動
             while (true)
             {
                 msg = client.Read_Data();
+                is_Special = is_ShowPos();
                 if (Int32.Parse(msg) == 0)//24回合
                 {
-
+                    client.DisConnect();
+                    MessageBox.Show("MR.X獲勝，請現身!\n");
+                    SetInfoBox("遊戲結束\n", infobox);
+                    GameOver();
+                    VisableUI(ResultPic_Theft, true);
+                    VisableUI(Close, true);
+                    return;
                 }
                 else//非24回合
                 {
                     moveData = new String[3];
                     SetInfoBox("------第 " + turn + " 回合------\n", infobox);
+                   
                     //等別人動
                     for (int i = player_ID - 1; i > 0; i--)
                     {
-                        msg = client.Read_Data();
-                        moveData = Decoding(msg);
-                        if (moveData[0] == "1" && moveData[1] == "4")//MR.X使用兩步券
+                        moveData = Decoding();
+                        if (Int32.Parse(moveData[0]) == 1&&moveData!=null)
                         {
-                            SetInfoBox("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "\n", infobox);
-                            MessageBox.Show("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "\n");
-                            for (int j = 0; j < 2; j++)
+                            //Mr.X進行移動的設定
+                            if (Int32.Parse(moveData[1]) == 4)//使用兩步券
                             {
-                                msg = client.Read_Data();
-                                moveData = Decoding(msg);
-                                map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);//設定遊戲記錄表位置
-                                map.DeductTicket(Int32.Parse(moveData[0]), Int32.Parse(moveData[1]));//使用車票須扣除
-                                if ((turn == 3 || turn == 8 || turn == 13 || turn == 18))
+                                SetInfoBox("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "\n", infobox);
+                                map.DeductTicket(Int32.Parse(moveData[0]), Int32.Parse(moveData[1]));
+                                //連續動兩回合
+                                for (int j = 0; j < 2; j++)
                                 {
-                                 SetInfoBox("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "移動至" + moveData[2] + "\n", infobox);
-                                 SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
-                                 VisableUI(figure[0], true);
+                                    
+                                    moveData = Decoding();
+                                    map.DeductTicket(Int32.Parse(moveData[0]), Int32.Parse(moveData[1]));
+                                    if (is_Special)
+                                    {
+                                        is_Special = false;
+                                        SetInfoBox("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "移動至" + moveData[2] + "\n", infobox);
+                                        map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);
+                                        SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
+                                        VisableUI(figure[0], true);
+                                    }
+                                    else
+                                    {
+                                        SetInfoBox("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "\n", infobox);
+                                        map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);
+                                        VisableUI(figure[0], false);
+                                    }
+                                    if (j == 0)
+                                    {
+                                        for (int l = 2; l <= player_Sum; l++)
+                                        {
+                                            map.SetPos(l, map.GetPos(l, turn - 1), turn);//設定遊戲記錄表位置
+                                        }
+                                        turn++;
+                                        SetInfoBox("------第 " + turn + " 回合------\n", infobox);
+                                        is_Special = is_ShowPos();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                //非使用兩步券
+                                if (is_Special)
+                                {
+                                    is_Special = false;
+                                    SetInfoBox("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "移動至" + moveData[2] + "\n", infobox);
+                                    SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
+                                    VisableUI(figure[0], true);
                                 }
                                 else
                                 {
-                                 SetInfoBox("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "\n", infobox);
-                                 VisableUI(figure[0], false);
+                                    SetInfoBox("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "\n", infobox);     
+                                    VisableUI(figure[0], false);
                                 }
-                                if (j == 0)
-                                {
-                                    for (int l = 2; l <= player_Sum; l++)
-                                    {
-                                        map.SetPos(l, map.GetPos(l, turn - 1), turn);//設定遊戲記錄表位置
-                                    }
-                                    turn++;
-                                    SetInfoBox("------第 " + turn + " 回合------\n", infobox);
-                                }//更新紀錄表位置
+                                map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);
                             }
                         }
-                        else//MR.X不使用兩步券+其他警察移動
+                        else
                         {
-                            if (Int32.Parse(moveData[0]) != 1)
+                            //其餘角色進行移動
+                            map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);
+                            map.DeductTicket(Int32.Parse(moveData[0]), Int32.Parse(moveData[1]));
+                            map.AddTicket(Int32.Parse(moveData[1]));
+                            SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
+                            SetInfoBox("玩家 " + Int32.Parse(moveData[0]) + "移動到 " + Int32.Parse(moveData[2]) + "\n", infobox);
+                           
+                            msg = client.Read_Data();
+                            if (Int32.Parse(msg) == 1000)
                             {
-                                SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
+                                MessageBox.Show("於 " + moveData[2] + " 找到MR.X，警察獲勝!");
+                                VisableUI(ResultPic_Police, true);
+                                VisableUI(Close, true);
+                                GameOver();
+                                return;
                             }
-                            map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);//設定遊戲記錄表位置
-                            map.DeductTicket(Int32.Parse(moveData[0]), Int32.Parse(moveData[1]));//使用車票須扣除
+                            //判定是否相同地方
                         }
                     }
                     //自己動
-                    msg = client.Read_Data();
-                    moveData = Decoding(msg);
-
-                    //等別人動
-                    for (int i = player_Sum - player_ID; i > 0; i--)
+                    VisableUI(Input_Panel, true);
+                    moveData = Decoding();
+                    if (Int32.Parse(moveData[0]) == 1)
                     {
-                        msg = client.Read_Data();
-                        moveData = Decoding(msg);
+                        if (moveData[1] == "4")
+                        {
+                            isTwoStep = true;
+                            EditUI("請輸入第一步\n", Input_TextBox);
+                            moveData = Decoding();
+                            turn++;
+                            SetInfoBox("------第 " + turn + " 回合------\n", infobox);
+                            EditUI("請輸入第二步\n", Input_TextBox);
+                            moveData = Decoding();
+                            isTwoStep = false;
+
+                        }
+                    }
+                    else
+                    {
+                        
+                        if (is_SamePos(map.GetPos(1, turn), Int32.Parse(moveData[2])) && Int32.Parse(moveData[0]) != 1)
+                        {       //判定是否抓到MR.X
+
+                            MessageBox.Show("於 " + moveData[2] + " 找到MR.X，警察獲勝!");
+                            client.Send_Data("1000");
+                            client.Read_Data();
+                            VisableUI(ResultPic_Police, true);
+                            VisableUI(Close, true);
+                            GameOver();
+
+                            return;
+                            //GameOver
+
+                        }
+                        else
+                        {
+                            client.Send_Data("11");
+                            client.Read_Data();
+                        }
+                    }
+                   
+                    
+                    
+                    VisableUI(Input_Panel, false);
+                    //等別人動
+                    for (int i = player_Sum-player_ID; i > 0; i--)
+                    {
+                        moveData = Decoding();
+                        if (moveData != null)
+                        {
+                            map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);
+                            map.DeductTicket(Int32.Parse(moveData[0]), Int32.Parse(moveData[1]));
+                            map.AddTicket(Int32.Parse(moveData[1]));
+                            SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
+                            SetInfoBox("玩家 " + Int32.Parse(moveData[0]) + "移動到 " + Int32.Parse(moveData[2]) + "\n", infobox);
+                            //判定是否相同地方
+                            msg = client.Read_Data();
+                            if (Int32.Parse(msg) == 1000)
+                            {
+                                MessageBox.Show("於 " + moveData[2] + " 找到MR.X，警察獲勝!");
+                                VisableUI(ResultPic_Police, true);
+                                VisableUI(Close, true);
+                                GameOver();
+                                return;
+                            }
+                        }
                     }
                 }
+                turn++;
             }
-        }*/
-        private void Game()
+        }
+        /*private void Game()
         {
             Ini_SetUp();
             
@@ -298,14 +436,14 @@ namespace Game_Client2._0
                     {
                         msg = client.Read_Data();
                        // AppendUI(msg, infobox);
-                        moveData = Decoding(msg);
+                        moveData = Decoding();
                         if (moveData[1] == "4"&&Int32.Parse(moveData[0]) == 1)
                         {
                             SetInfoBox("MR.X使用" + transportation[Int32.Parse(moveData[1])] + "\n", infobox);
                             for (int j = 0; j < 2; j++)
                             {
                                 msg = client.Read_Data();
-                                moveData = Decoding(msg);
+                                moveData = Decoding();
                                 map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);//設定遊戲記錄表位置
                                 map.DeductTicket(Int32.Parse(moveData[0]), Int32.Parse(moveData[1]));//使用車票須扣除
                                 if ((turn == 3 || turn == 8 || turn == 13 || turn == 18))
@@ -365,7 +503,7 @@ namespace Game_Client2._0
                     VisableUI(Input_Panel, true);
                     //顯示移動時產生的元件
                     msg = client.Read_Data();
-                    moveData = Decoding(msg);
+                    moveData = Decoding();
                     
                     if (moveData[1] == "4")
                     {
@@ -398,7 +536,7 @@ namespace Game_Client2._0
                     {
                         msg = client.Read_Data();
                        // AppendUI(msg, infobox);
-                        moveData = Decoding(msg);
+                        moveData = Decoding();
                         SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
                         SetInfoBox("玩家 " + Int32.Parse(moveData[0]) + "移動到 " + Int32.Parse(moveData[2]) + "\n", infobox);
                         map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);
@@ -422,17 +560,17 @@ namespace Game_Client2._0
                     
                 }
             }
-        }
+        }*/
         private void GameOver()
         {
-            client.Send_Data("0000");
+            //client.Send_Data("0000");
             Thread.Sleep(1000);
             client.DisConnect();
             AppendUI("遊戲結束\n", infobox);
             VisableUI(game_panel, false);
             VisableUI(GameEnd, true);
-            this.Width = GameEnd.Width;
-            this.Height = GameEnd.Height;
+            //this.Width = GameEnd.Width;
+            //this.Height = GameEnd.Height;
         }
         //遊戲按下START 後等待其他玩家入場
         private void listen()
@@ -511,27 +649,45 @@ namespace Game_Client2._0
                                 if (map.is_ConnectingVertex(pos, vertex, Transport.SelectedIndex))
                                 {
                                    bool is_same = false;
-                                   for (int i = 2; i <= player_Sum; i++)
+                                   if (player_ID == 1)
                                    {
-                                       if (i < player_ID)
+                                       for (int i = 2; i <= player_Sum; i++)
                                        {
-                                           if (is_SamePos(map.GetPos(i, turn), vertex))
-                                           {
-                                               is_same = true;
-                                               MessageBox.Show("兩個角色不得在同一點\n");
-                                               break;
-                                           }
-                                           //比自己早動
+                                  
+                                          if (is_SamePos(map.GetPos(i, turn - 1), vertex))
+                                          {
+                                           is_same = true;
+                                           MessageBox.Show("請勿自殺\n");
+                                           break;
+                                          }
+                                          //比自己晚動
+                                           
                                        }
-                                       else
+                                   }
+                                   else
+                                   {
+                                       for (int i = 2; i <= player_Sum; i++)
                                        {
-                                           if (is_SamePos(map.GetPos(i, turn - 1), vertex))
+                                           if (i < player_ID)
                                            {
-                                               is_same = true;
-                                               MessageBox.Show("兩個角色不得在同一點\n");
-                                               break;
+                                               if (is_SamePos(map.GetPos(i, turn), vertex))
+                                               {
+                                                   is_same = true;
+                                                   MessageBox.Show("兩個角色不得在同一點\n");
+                                                   break;
+                                               }
+                                               //比自己早動
                                            }
-                                           //比自己晚動
+                                           else
+                                           {
+                                               if (is_SamePos(map.GetPos(i, turn - 1), vertex))
+                                               {
+                                                   is_same = true;
+                                                   MessageBox.Show("兩個角色不得在同一點\n");
+                                                   break;
+                                               }
+                                               //比自己晚動
+                                           }
                                        }
                                    }
                                    if (!is_same)//確定沒有踩相同位置
@@ -678,9 +834,11 @@ namespace Game_Client2._0
         //------------------------------
         //| 玩家  | 交通方式 | 移動位置 |
         //------------------------------
-        private String[] Decoding(String msg)
+        private String[] Decoding()
         {
+            String msg;
             int positon = 0, start = 0, index = 0;
+            msg = client.Read_Data();
             String[] Data=new String[3];
             do
             {
@@ -832,8 +990,7 @@ namespace Game_Client2._0
         }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            Point point = pictureBox1.PointToClient(Cursor.Position);
-            MessageBox.Show(point.ToString());
+
         }
         private void Close_Click(object sender, EventArgs e)
         {
@@ -856,5 +1013,6 @@ namespace Game_Client2._0
                 this.Left_Panel.AutoScrollPosition = scrollPosition;
             }
         }
+        
     }
 }
