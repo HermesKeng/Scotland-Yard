@@ -147,6 +147,41 @@ namespace Game_Client2._0
                     PlayerTransport[i, 4] = 0;//0
                 }
             }
+            //緊急狀況使用
+            /*
+            for(int i=0;i<5;i++){
+                switch (i)
+                {
+                    case 1:
+                         PlayerTransport[i, 0] = 4;//4
+                         PlayerTransport[i, 1] = 3;//3
+                         PlayerTransport[i, 2] = 3;//3
+                         PlayerTransport[i, 3] = 3;//3
+                         PlayerTransport[i, 4] = 2;//2
+                        break;
+                    case 2:
+                        PlayerTransport[i, 0] = 10;//10
+                        PlayerTransport[i, 1] = 8;//8
+                        PlayerTransport[i, 2] = 4;//4
+                        PlayerTransport[i, 3] = 0;//0
+                        PlayerTransport[i, 4] = 0;//0
+                        break;
+                    case 3:
+                        PlayerTransport[i, 0] = 10;//10
+                        PlayerTransport[i, 1] = 8;//8
+                        PlayerTransport[i, 2] = 4;//4
+                        PlayerTransport[i, 3] = 0;//0
+                        PlayerTransport[i, 4] = 0;//0
+                        break;
+                    case 4:
+                        PlayerTransport[i, 0] = 10;//10
+                        PlayerTransport[i, 1] = 8;//8
+                        PlayerTransport[i, 2] = 4;//4
+                        PlayerTransport[i, 3] = 0;//0
+                        PlayerTransport[i, 4] = 0;//0
+                        break;
+                }
+            }*/
         }
         public Map()
         {

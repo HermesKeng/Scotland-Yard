@@ -45,6 +45,7 @@
             this.Left_Panel = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Right_Panel = new System.Windows.Forms.Panel();
+            this.Tip = new System.Windows.Forms.Label();
             this.Move_Panel = new System.Windows.Forms.FlowLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.Ticket = new System.Windows.Forms.RichTextBox();
@@ -62,7 +63,6 @@
             this.game_panel = new System.Windows.Forms.Panel();
             this.clientBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.Tip = new System.Windows.Forms.Label();
             this.Login.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.GameEnd.SuspendLayout();
@@ -126,7 +126,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(110, 29);
             this.textBox1.TabIndex = 3;
-            this.textBox1.Text = "192.168.100.6";
             // 
             // start_btn
             // 
@@ -265,6 +264,18 @@
             this.Right_Panel.Name = "Right_Panel";
             this.Right_Panel.Size = new System.Drawing.Size(320, 632);
             this.Right_Panel.TabIndex = 23;
+            // 
+            // Tip
+            // 
+            this.Tip.AutoSize = true;
+            this.Tip.Font = new System.Drawing.Font("微軟正黑體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.Tip.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.Tip.Location = new System.Drawing.Point(19, 79);
+            this.Tip.Name = "Tip";
+            this.Tip.Size = new System.Drawing.Size(280, 95);
+            this.Tip.TabIndex = 26;
+            this.Tip.Text = "●小幫手：\r\n1.請先選擇交通方式再輸入指定位置\r\n2.MR.X於第3、8、13、18、22回合現身\r\n3.遊戲記錄表是觀看MR.X動向的依據\r\n4.請隨時注意車" +
+    "票是否充足";
             // 
             // Move_Panel
             // 
@@ -459,18 +470,6 @@
             // 
             this.form1BindingSource.DataSource = typeof(Game_Client2._0.Form1);
             // 
-            // Tip
-            // 
-            this.Tip.AutoSize = true;
-            this.Tip.Font = new System.Drawing.Font("微軟正黑體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.Tip.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.Tip.Location = new System.Drawing.Point(19, 79);
-            this.Tip.Name = "Tip";
-            this.Tip.Size = new System.Drawing.Size(280, 95);
-            this.Tip.TabIndex = 26;
-            this.Tip.Text = "●小幫手：\r\n1.請先選擇交通方式再輸入指定位置\r\n2.MR.X於第3、8、13、18、22回合現身\r\n3.遊戲記錄表是觀看MR.X動向的依據\r\n4.請隨時注意車" +
-    "票是否充足";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -481,8 +480,10 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(1245, 641);
+            this.ControlBox = false;
             this.Controls.Add(this.game_panel);
             this.Controls.Add(this.Login);
+            this.Controls.Add(this.GameEnd);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;

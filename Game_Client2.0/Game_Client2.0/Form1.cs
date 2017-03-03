@@ -14,7 +14,7 @@ namespace Game_Client2._0
     {
         private int player_ID;
         private PictureBox[] figure=new PictureBox[5];
-        private int player_Sum=5;
+        private int player_Sum=3;
         private bool isTwoStep = false;
         int turn = 0;
         private Client client = new Client();
@@ -144,7 +144,7 @@ namespace Game_Client2._0
         private void Ini_SetUp()
         {
             String msg;
-            turn =1;
+            turn =22;
             map = new Map();
             //遊戲開始
             //遊戲配置-隨機分配開始位置
@@ -221,6 +221,7 @@ namespace Game_Client2._0
             Ini_SetUp();
             String msg;
             String[] moveData;
+            bool is_GameOver = false;
             bool is_Special = false;
             //執行回合，輪流移動
             while (true)
@@ -282,6 +283,16 @@ namespace Game_Client2._0
                                         turn++;
                                         SetInfoBox("------第 " + turn + " 回合------\n", infobox);
                                         is_Special = is_ShowPos();
+                                        
+                                    }
+                                    msg = client.Read_Data();
+                                    if (Int32.Parse(msg) == 1000)
+                                    {
+                                        MessageBox.Show("於 " + moveData[2] + " 找到MR.X，警察獲勝!");
+                                        VisableUI(ResultPic_Police, true);
+                                        VisableUI(Close, true);
+                                        GameOver();
+                                        return;
                                     }
                                 }
                             }
@@ -301,6 +312,17 @@ namespace Game_Client2._0
                                     VisableUI(figure[0], false);
                                 }
                                 map.SetPos(Int32.Parse(moveData[0]), Int32.Parse(moveData[2]), turn);
+                                //判定是否相同地方
+
+                                msg = client.Read_Data();
+                                if (Int32.Parse(msg) == 1000)
+                                {
+                                    MessageBox.Show("於 " + moveData[2] + " 找到MR.X，警察獲勝!");
+                                    VisableUI(ResultPic_Police, true);
+                                    VisableUI(Close, true);
+                                    GameOver();
+                                    return;
+                                }
                             }
                         }
                         else
@@ -311,7 +333,8 @@ namespace Game_Client2._0
                             map.AddTicket(Int32.Parse(moveData[1]));
                             SetFigure(Int32.Parse(moveData[2]), Int32.Parse(moveData[0]));
                             SetInfoBox("玩家 " + Int32.Parse(moveData[0]) + "移動到 " + Int32.Parse(moveData[2]) + "\n", infobox);
-                           
+                            //判定是否相同地方
+
                             msg = client.Read_Data();
                             if (Int32.Parse(msg) == 1000)
                             {
@@ -321,9 +344,9 @@ namespace Game_Client2._0
                                 GameOver();
                                 return;
                             }
-                            //判定是否相同地方
                         }
                     }
+
                     //自己動
                     VisableUI(Input_Panel, true);
                     moveData = Decoding();
@@ -333,13 +356,91 @@ namespace Game_Client2._0
                         {
                             isTwoStep = true;
                             EditUI("請輸入第一步\n", Input_TextBox);
+                            VisableUI(Input_Panel, true);
                             moveData = Decoding();
+                            for (int l = 2; l <= player_Sum; l++)
+                            {
+                                map.SetPos(l, map.GetPos(l, turn - 1), turn);//設定遊戲記錄表位置
+                            }
+                            for (int i = 2; i <= player_Sum; i++)
+                            {
+                                if (is_SamePos(map.GetPos(i, turn - 1), Int32.Parse(moveData[2])))
+                                {
+
+                                    is_GameOver = true;
+                                }
+                            }
+                            if (is_GameOver)
+                            {
+                                MessageBox.Show("於 " + moveData[2] + " 找到MR.X，警察獲勝!");
+                                client.Send_Data("1000");
+                                client.Read_Data();
+                                VisableUI(ResultPic_Police, true);
+                                VisableUI(Close, true);
+                                GameOver();
+                                return;
+                            }
+                            else
+                            {
+                                client.Send_Data("11");
+                                client.Read_Data();
+                            }
                             turn++;
                             SetInfoBox("------第 " + turn + " 回合------\n", infobox);
                             EditUI("請輸入第二步\n", Input_TextBox);
+                            VisableUI(Input_Panel, true);
                             moveData = Decoding();
+                            for (int i = 2; i <= player_Sum; i++)
+                            {
+                                if (is_SamePos(map.GetPos(i, turn - 1), Int32.Parse(moveData[2])))
+                                {
+
+                                    is_GameOver = true;
+                                }
+                            }
+                            if (is_GameOver)
+                            {
+                                MessageBox.Show("於 " + moveData[2] + " 找到MR.X，警察獲勝!");
+                                client.Send_Data("1000");
+                                client.Read_Data();
+                                VisableUI(ResultPic_Police, true);
+                                VisableUI(Close, true);
+                                GameOver();
+                                return;
+                            }
+                            else
+                            {
+                                client.Send_Data("11");
+                                client.Read_Data();
+                            }
                             isTwoStep = false;
 
+                        }
+                        else
+                        {
+                            
+                            for (int i = 2; i <= player_Sum; i++)
+                            {
+                                if (is_SamePos(map.GetPos(i, turn-1), Int32.Parse(moveData[2])))
+                                {
+
+                                    is_GameOver=true;
+                                }
+                            }
+                            if(is_GameOver){
+                                    MessageBox.Show("於 " + moveData[2] + " 找到MR.X，警察獲勝!");
+                                    client.Send_Data("1000");
+                                    client.Read_Data();
+                                    VisableUI(ResultPic_Police, true);
+                                    VisableUI(Close, true);
+                                    GameOver();
+                                    return;
+                            }
+                            else
+                            {
+                                client.Send_Data("11");
+                                client.Read_Data();
+                            }
                         }
                     }
                     else
@@ -368,7 +469,7 @@ namespace Game_Client2._0
                    
                     
                     
-                    VisableUI(Input_Panel, false);
+                   
                     //等別人動
                     for (int i = player_Sum-player_ID; i > 0; i--)
                     {
@@ -649,22 +750,7 @@ namespace Game_Client2._0
                                 if (map.is_ConnectingVertex(pos, vertex, Transport.SelectedIndex))
                                 {
                                    bool is_same = false;
-                                   if (player_ID == 1)
-                                   {
-                                       for (int i = 2; i <= player_Sum; i++)
-                                       {
-                                  
-                                          if (is_SamePos(map.GetPos(i, turn - 1), vertex))
-                                          {
-                                           is_same = true;
-                                           MessageBox.Show("請勿自殺\n");
-                                           break;
-                                          }
-                                          //比自己晚動
-                                           
-                                       }
-                                   }
-                                   else
+                                   if (player_ID != 1)
                                    {
                                        for (int i = 2; i <= player_Sum; i++)
                                        {
@@ -705,6 +791,7 @@ namespace Game_Client2._0
                                            infobox.ScrollToCaret();
                                            Renew_Ticket();
                                            client.Send_Data(Msg);
+                                           VisableUI(Input_Panel, false);
                                        }
                                    }
                                 }
