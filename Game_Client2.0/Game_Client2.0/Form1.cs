@@ -14,7 +14,7 @@ namespace Game_Client2._0
     {
         private int player_ID;
         private PictureBox[] figure=new PictureBox[5];
-        private int player_Sum=3;
+        private int player_Sum=5;
         private bool isTwoStep = false;
         int turn = 0;
         private Client client = new Client();
@@ -144,7 +144,7 @@ namespace Game_Client2._0
         private void Ini_SetUp()
         {
             String msg;
-            turn =22;
+            turn =1;
             map = new Map();
             //遊戲開始
             //遊戲配置-隨機分配開始位置

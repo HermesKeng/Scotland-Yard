@@ -45,7 +45,7 @@ namespace Game_Server2._0
                 unit.Visible = is_Open;
             }
         }
-        private int Player=3,counter=0;
+        private int Player=5,counter=0;
         private void Set_Connect(){
             int Port = 1101;
             System.Net.IPAddress myIpAddress;
@@ -107,7 +107,7 @@ namespace Game_Server2._0
                                     138,141,155,174,197,198 };
             List<int> start_Point = new List<int>();
             String msg = null;
-            int count = 0,turn=22;//如果要強迫修改起始點!!!!!意外狀況發生時
+            int count = 0,turn=1;//如果要強迫修改起始點!!!!!意外狀況發生時
             /*
               start_Point.Add(initial_Point[temp]);
               start_Point.Add(initial_Point[temp]);
